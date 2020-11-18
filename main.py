@@ -9,13 +9,13 @@ from linebot.exceptions import (InvalidSignatureError)
 import template
 
 
-# firestoreの初期化（デバッグ時は以下2行をコメントアウト）
+# firestoreの初期化（debug）
 # from firebase_admin import credentials
 # cred = credentials.Certificate('serviceAccountKey.json')
 # firebase_admin.initialize_app(cred)
 # db = firestore.client()
 
-# firestoreの初期化
+# firestoreの初期化（デバッグ時は以下2行をコメントアウト）
 firebase_admin.initialize_app()
 db = firestore.client()
 

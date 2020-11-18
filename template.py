@@ -1,3 +1,6 @@
+from linebot.models import FlexSendMessage
+
+
 def main_message_template(room):
 
     room_name = room['name']
@@ -6,7 +9,7 @@ def main_message_template(room):
     total_seats_num = room['total_seats_num']
     update = room['update']
 
-    template = {
+    contents = {
         "type": "bubble",
         "size": "mega",
         "direction": "ltr",
@@ -107,11 +110,13 @@ def main_message_template(room):
         }
     }
 
-    return template
+    alt_text = f'空席: {room["seats_num"]} web空き: {room["web_seats_num"]} 総数: {room["total_seats_num"]}\n {room["update"]}更新'
+    return FlexSendMessage(alt_text=alt_text, contents=contents)
 
 
 def closing_day_message_template():
-    template = {
+    alt_text = '現在は開館時間外です。'
+    contents = {
         "type": "bubble",
         "direction": "ltr",
         "body": {
@@ -215,4 +220,4 @@ def closing_day_message_template():
         }
     }
 
-    return template
+    return FlexSendMessage(alt_text=alt_text, contents=contents)

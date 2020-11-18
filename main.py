@@ -3,21 +3,21 @@ from firebase_admin import firestore
 from datetime import datetime, timedelta, timezone
 import os
 from flask import Flask, request, abort
-from linebot.models import (MessageEvent, TextMessage, TextSendMessage, FlexSendMessage)
+from linebot.models import (MessageEvent, TextMessage, TextSendMessage)
 from linebot import (LineBotApi, WebhookHandler)
 from linebot.exceptions import (InvalidSignatureError)
 import template
 
 
 # firestoreの初期化（debug）
-# from firebase_admin import credentials
-# cred = credentials.Certificate('serviceAccountKey.json')
-# firebase_admin.initialize_app(cred)
-# db = firestore.client()
+from firebase_admin import credentials
+cred = credentials.Certificate('serviceAccountKey.json')
+firebase_admin.initialize_app(cred)
+db = firestore.client()
 
 # firestoreの初期化（デバッグ時は以下2行をコメントアウト）
-firebase_admin.initialize_app()
-db = firestore.client()
+# firebase_admin.initialize_app()
+# db = firestore.client()
 
 # line-messaging-apiの初期化
 LINE_CHANNEL_ACCESS_TOKEN = os.environ.get('LINE_CHANNEL_ACCESS_TOKEN')
@@ -55,12 +55,6 @@ def get_room_data():
     return rooms
 
 
-def create_flex_message(room):
-    alt_text = f'空席: {room["seats_num"]} web空き: {room["web_seats_num"]} 総数: {room["total_seats_num"]}\n {room["update"]}更新'
-    flex_message = template.main_message_template(room)
-    return FlexSendMessage(alt_text=alt_text, contents=flex_message)
-
-
 @app.route('/callback', methods=['POST'])
 def callback():
     signature = request.headers['X-Line-Signature']
@@ -76,14 +70,14 @@ def callback():
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     room_name = event.message.text
-    message = '現在は開館時間外です'
+    message = template.closing_day_message_template()
     if room_name in room_ids.keys():
         room_id = room_ids[room_name]
         rooms = get_room_data()
         if rooms:
             for room in rooms:
                 if room.get('id') == room_id:
-                    message = create_flex_message(room)
+                    message = template.main_message_template(room)
     else:
         message = '以下のリッチメニューに存在する部屋名を入力してください'
 
@@ -94,7 +88,7 @@ def handle_message(event):
 
 
 if __name__ == '__main__':
-    app.run(threaded=True)
+    # app.run(threaded=True)
 
     # debug
-    # app.run(host='0.0.0.0', port=8080, threaded=True, debug=True)
+    app.run(host='0.0.0.0', port=8080, threaded=True, debug=True)

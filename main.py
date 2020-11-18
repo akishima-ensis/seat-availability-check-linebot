@@ -1,23 +1,23 @@
+import os
 import firebase_admin
 from firebase_admin import firestore
 from datetime import datetime, timedelta, timezone
-import os
 from flask import Flask, request, abort
-from linebot.models import (MessageEvent, TextMessage, TextSendMessage)
-from linebot import (LineBotApi, WebhookHandler)
-from linebot.exceptions import (InvalidSignatureError)
-import template
+from linebot.models import MessageEvent, TextMessage
+from linebot import LineBotApi, WebhookHandler
+from linebot.exceptions import InvalidSignatureError
+import flex_message_template
 
 
 # firestoreの初期化（debug）
-from firebase_admin import credentials
-cred = credentials.Certificate('serviceAccountKey.json')
-firebase_admin.initialize_app(cred)
-db = firestore.client()
+# from firebase_admin import credentials
+# cred = credentials.Certificate('serviceAccountKey.json')
+# firebase_admin.initialize_app(cred)
+# db = firestore.client()
 
 # firestoreの初期化（デバッグ時は以下2行をコメントアウト）
-# firebase_admin.initialize_app()
-# db = firestore.client()
+firebase_admin.initialize_app()
+db = firestore.client()
 
 # line-messaging-apiの初期化
 LINE_CHANNEL_ACCESS_TOKEN = os.environ.get('LINE_CHANNEL_ACCESS_TOKEN')
@@ -35,6 +35,10 @@ room_ids = {
     'グループ学習室': 4,
     'ティーンズ学習室': 5
 }
+
+# flex_message_template
+closing_day_message = flex_message_template.closing_day_message_template()
+failure_message = flex_message_template.failure_message_template()
 
 
 def get_room_data():
@@ -69,26 +73,24 @@ def callback():
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    room_name = event.message.text
-    message = template.closing_day_message_template()
-    if room_name in room_ids.keys():
-        room_id = room_ids[room_name]
+    received_message = event.message.text
+    reply_message = closing_day_message
+
+    if received_message in room_ids.keys():
+        room_id = room_ids[received_message]
         rooms = get_room_data()
         if rooms:
             for room in rooms:
                 if room.get('id') == room_id:
-                    message = template.main_message_template(room)
+                    reply_message = flex_message_template.main_message_template(room)
     else:
-        message = template.failure_message_template()
+        reply_message = failure_message
 
-    if type(message) is str:
-        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=message))
-    else:
-        line_bot_api.reply_message(event.reply_token, messages=message)
+    line_bot_api.reply_message(event.reply_token, messages=reply_message)
 
 
 if __name__ == '__main__':
-    # app.run(threaded=True)
+    app.run(threaded=True)
 
     # debug
-    app.run(host='0.0.0.0', port=8080, threaded=True, debug=True)
+    # app.run(host='0.0.0.0', port=8080, threaded=True, debug=True)

@@ -1,0 +1,4 @@
+flask
+firebase-admin
+gunicorn
+line-bot-sdk

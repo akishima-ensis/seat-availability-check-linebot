@@ -221,3 +221,110 @@ def closing_day_message_template():
     }
 
     return FlexSendMessage(alt_text=alt_text, contents=contents)
+
+
+def failure_message_template():
+    alt_text = '正しい部屋名を入力してください'
+    contents = {
+      "type": "bubble",
+      "body": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "text",
+            "text": "正しい部屋を入力してください",
+            "size": "lg",
+            "align": "center",
+            "contents": []
+          },
+          {
+            "type": "separator",
+            "margin": "lg"
+          },
+          {
+            "type": "button",
+            "action": {
+              "type": "message",
+              "label": "学習席（有線LAN有）",
+              "text": "学習席（有線LAN有）"
+            },
+            "height": "sm",
+            "style": "secondary"
+          },
+          {
+            "type": "separator",
+            "margin": "xs"
+          },
+          {
+            "type": "button",
+            "action": {
+              "type": "message",
+              "label": "学習席",
+              "text": "学習席"
+            },
+            "height": "sm",
+            "style": "secondary"
+          },
+          {
+            "type": "separator",
+            "margin": "xs"
+          },
+          {
+            "type": "button",
+            "action": {
+              "type": "message",
+              "label": "研究個室",
+              "text": "研究個室"
+            },
+            "height": "sm",
+            "style": "secondary"
+          },
+          {
+            "type": "separator",
+            "margin": "xs"
+          },
+          {
+            "type": "button",
+            "action": {
+              "type": "message",
+              "label": "インターネット・DB席",
+              "text": "インターネット・DB席"
+            },
+            "height": "sm",
+            "style": "secondary"
+          },
+          {
+            "type": "separator",
+            "margin": "xs"
+          },
+          {
+            "type": "button",
+            "action": {
+              "type": "message",
+              "label": "グループ学習室",
+              "text": "グループ学習室"
+            },
+            "height": "sm",
+            "style": "secondary"
+          },
+          {
+            "type": "separator",
+            "margin": "xs"
+          },
+          {
+            "type": "button",
+            "action": {
+              "type": "message",
+              "label": "ティーンズ学習室",
+              "text": "ティーンズ学習室"
+            },
+            "height": "sm",
+            "style": "secondary"
+          }
+        ]
+      }
+    }
+
+    return FlexSendMessage(alt_text=alt_text, contents=contents)
+

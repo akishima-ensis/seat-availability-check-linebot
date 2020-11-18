@@ -79,7 +79,7 @@ def handle_message(event):
                 if room.get('id') == room_id:
                     message = template.main_message_template(room)
     else:
-        message = '以下のリッチメニューに存在する部屋名を入力してください'
+        message = template.failure_message_template()
 
     if type(message) is str:
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=message))

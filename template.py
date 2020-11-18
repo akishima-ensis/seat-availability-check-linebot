@@ -108,3 +108,111 @@ def main_message_template(room):
     }
 
     return template
+
+
+def closing_day_message_template():
+    template = {
+        "type": "bubble",
+        "direction": "ltr",
+        "body": {
+            "type": "box",
+            "layout": "vertical",
+            "spacing": "md",
+            "contents": [
+                {
+                    "type": "text",
+                    "text": "現在は開館時間外です",
+                    "weight": "bold",
+                    "size": "xl",
+                    "align": "center",
+                    "gravity": "center",
+                    "wrap": True,
+                    "contents": []
+                },
+                {
+                    "type": "separator",
+                    "margin": "lg"
+                },
+                {
+                    "type": "box",
+                    "layout": "vertical",
+                    "spacing": "sm",
+                    "margin": "lg",
+                    "contents": [
+                        {
+                            "type": "box",
+                            "layout": "vertical",
+                            "spacing": "sm",
+                            "contents": [
+                                {
+                                    "type": "text",
+                                    "text": "開館時間",
+                                    "size": "md",
+                                    "color": "#A3A3A3FF",
+                                    "flex": 2,
+                                    "align": "center",
+                                    "contents": []
+                                },
+                                {
+                                    "type": "text",
+                                    "text": "火〜金（10:00-20:00）\n土日祝（10:00～18:00）",
+                                    "size": "md",
+                                    "color": "#666666",
+                                    "flex": 4,
+                                    "align": "center",
+                                    "wrap": True,
+                                    "contents": []
+                                },
+                                {
+                                    "type": "spacer"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "box",
+                            "layout": "vertical",
+                            "spacing": "md",
+                            "contents": [
+                                {
+                                    "type": "text",
+                                    "text": "休館日",
+                                    "size": "md",
+                                    "color": "#A3A3A3FF",
+                                    "flex": 1,
+                                    "align": "center",
+                                    "contents": []
+                                },
+                                {
+                                    "type": "text",
+                                    "text": " 毎週月曜日(休日の場合は次の平日)、年末年始、特別整理期間",
+                                    "size": "sm",
+                                    "color": "#666666",
+                                    "flex": 4,
+                                    "align": "center",
+                                    "wrap": True,
+                                    "contents": []
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        "footer": {
+            "type": "box",
+            "layout": "horizontal",
+            "flex": 1,
+            "contents": [
+              {
+                  "type": "button",
+                  "action": {
+                      "type": "uri",
+                      "label": "公式サイト",
+                      "uri": "https://www.akishimaensis.jp/"
+                  }
+              }
+            ]
+        }
+    }
+
+    return template

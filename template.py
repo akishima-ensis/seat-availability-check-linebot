@@ -9,6 +9,7 @@ def main_message_template(room):
     total_seats_num = room['total_seats_num']
     update = room['update']
 
+    alt_text = f'空席: {room["seats_num"]} web空き: {room["web_seats_num"]} 総数: {room["total_seats_num"]}\n {room["update"]}更新'
     contents = {
         "type": "bubble",
         "size": "mega",
@@ -110,7 +111,6 @@ def main_message_template(room):
         }
     }
 
-    alt_text = f'空席: {room["seats_num"]} web空き: {room["web_seats_num"]} 総数: {room["total_seats_num"]}\n {room["update"]}更新'
     return FlexSendMessage(alt_text=alt_text, contents=contents)
 
 

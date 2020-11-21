@@ -115,7 +115,7 @@ def main_message_template(room):
 
 
 def closing_day_message_template():
-    alt_text = '現在は開館時間外です。'
+    alt_text = '現在は閉館しています。'
     contents = {
         'type': 'bubble',
         'direction': 'ltr',
@@ -126,7 +126,7 @@ def closing_day_message_template():
             'contents': [
                 {
                     'type': 'text',
-                    'text': '現在は開館時間外です',
+                    'text': '現在は閉館しています。',
                     'weight': 'bold',
                     'size': 'xl',
                     'align': 'center',

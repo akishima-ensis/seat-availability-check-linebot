@@ -1,18 +1,21 @@
 from linebot.models import FlexSendMessage
 
 
-def main_message_template(room):
+def seats_info_message(room):
 
     room_name = room['name']
     seats_num = room['seats_num']
-    web_seats_num = room['web_seats_num']
     total_seats_num = room['total_seats_num']
     update = room['update']
-    
-    alt_text = f'空席: {room["seats_num"]} web空き: {room["web_seats_num"]} 総数: {room["total_seats_num"]}\n {room["update"]}更新'
+
+    seats_status_color_code = '#94D0B6'
+    if seats_num == 0:
+        seats_status_color_code = '#F7A5AB'
+
+    alt_text = f'空席: {seats_num} {update} 更新'
+
     contents = {
         'type': 'bubble',
-        'size': 'mega',
         'direction': 'ltr',
         'body': {
             'type': 'box',
@@ -21,91 +24,37 @@ def main_message_template(room):
                 {
                     'type': 'text',
                     'text': room_name,
-                    'weight': 'bold',
+                    'weight': 'regular',
                     'size': 'xl',
-                    'color': '#232121FF',
                     'align': 'center',
-                    'contents': []
                 },
                 {
                     'type': 'separator',
                     'margin': 'lg'
                 },
                 {
-                    'type': 'box',
-                    'layout': 'baseline',
-                    'margin': 'xl',
-                    'contents': [
-                        {
-                            'type': 'text',
-                            'text': '空席数 ',
-                            'weight': 'regular',
-                            'size': 'xxl',
-                            'flex': 1,
-                            'align': 'end',
-                            'wrap': True,
-                            'contents': []
-                        },
-                        {
-                            'type': 'text',
-                            'text': str(seats_num),
-                            'weight': 'bold',
-                            'size': 'xxl',
-                            'align': 'center',
-                            'gravity': 'center',
-                            'contents': []
-                        }
-                    ]
-                },
-                {
-                    'type': 'box',
-                    'layout': 'baseline',
-                    'contents': [
-                        {
-                            'type': 'text',
-                            'text': 'web空き',
-                            'size': 'xxl',
-                            'align': 'end',
-                            'contents': []
-                        },
-                        {
-                            'type': 'text',
-                            'text': str(web_seats_num),
-                            'weight': 'bold',
-                            'size': 'xxl',
-                            'align': 'center',
-                            'contents': []
-                        }
-                    ]
-                },
-                {
-                    'type': 'box',
-                    'layout': 'baseline',
-                    'contents': [
-                        {
-                            'type': 'text',
-                            'text': '総席数',
-                            'size': 'xxl',
-                            'align': 'end',
-                            'contents': []
-                        },
-                        {
-                            'type': 'text',
-                            'text': str(total_seats_num),
-                            'weight': 'bold',
-                            'size': 'xxl',
-                            'align': 'center',
-                            'contents': []
-                        }
-                    ]
+                    'type': 'text',
+                    'text': '空席あり',
+                    'weight': 'bold',
+                    'size': 'xxl',
+                    'color': seats_status_color_code,
+                    'align': 'center',
+                    'margin': 'lg',
                 },
                 {
                     'type': 'text',
-                    'text': update + ' 更新',
+                    'text': f'{seats_num} / {total_seats_num}',
+                    'weight': 'bold',
+                    'size': '4xl',
+                    'align': 'center',
+                },
+                {
+                    'type': 'text',
+                    'text': f'{update} 更新',
+                    'size': 'lg',
                     'color': '#7E837FFF',
                     'align': 'center',
-                    'margin': 'xxl',
-                    'contents': []
+                    'margin': 'lg',
                 }
             ]
         }
@@ -327,4 +276,3 @@ def failure_message_template():
     }
 
     return FlexSendMessage(alt_text=alt_text, contents=contents)
-

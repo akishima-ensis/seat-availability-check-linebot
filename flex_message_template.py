@@ -5,15 +5,17 @@ def seats_info_message(room):
 
     room_name = room['name']
     seats_num = room['seats_num']
+    web_seats_num = room['web_seats_num']
     total_seats_num = room['total_seats_num']
     update = room['update']
 
+    seats_status_text = '空席あり'
     seats_status_color_code = '#94D0B6'
     if seats_num == 0:
+        seats_status_text = '満席'
         seats_status_color_code = '#F7A5AB'
 
-    alt_text = f'空席: {seats_num} {update} 更新'
-
+    alt_text = f'空席: {seats_num} web空き: {web_seats_num} 総数: {total_seats_num} {update}更新'
     contents = {
         'type': 'bubble',
         'direction': 'ltr',
@@ -24,7 +26,7 @@ def seats_info_message(room):
                 {
                     'type': 'text',
                     'text': room_name,
-                    'weight': 'regular',
+                    'weight': 'bold',
                     'size': 'xl',
                     'align': 'center',
                 },
@@ -34,19 +36,20 @@ def seats_info_message(room):
                 },
                 {
                     'type': 'text',
-                    'text': '空席あり',
+                    'text': seats_status_text,
                     'weight': 'bold',
                     'size': 'xxl',
                     'color': seats_status_color_code,
                     'align': 'center',
-                    'margin': 'lg',
+                    'margin': 'xxl',
                 },
                 {
                     'type': 'text',
-                    'text': f'{seats_num} / {total_seats_num}',
+                    'text': f'残り {seats_num} / {total_seats_num}',
                     'weight': 'bold',
-                    'size': '4xl',
+                    'size': '3xl',
                     'align': 'center',
+                    'margin': 'md',
                 },
                 {
                     'type': 'text',
@@ -54,7 +57,7 @@ def seats_info_message(room):
                     'size': 'lg',
                     'color': '#7E837FFF',
                     'align': 'center',
-                    'margin': 'lg',
+                    'margin': 'xxl',
                 }
             ]
         }
@@ -64,7 +67,8 @@ def seats_info_message(room):
 
 
 def closing_day_message_template():
-    alt_text = '現在は閉館しています。'
+    alt_text = '現在は閉館しています'
+
     contents = {
         'type': 'bubble',
         'direction': 'ltr',
@@ -75,13 +79,12 @@ def closing_day_message_template():
             'contents': [
                 {
                     'type': 'text',
-                    'text': '現在は閉館しています。',
-                    'weight': 'bold',
+                    'text': '現在は閉館しています',
+                    'weight': 'regular',
                     'size': 'xl',
                     'align': 'center',
                     'gravity': 'center',
                     'wrap': True,
-                    'contents': []
                 },
                 {
                     'type': 'separator',
@@ -101,21 +104,19 @@ def closing_day_message_template():
                                 {
                                     'type': 'text',
                                     'text': '開館時間',
-                                    'size': 'md',
+                                    'size': 'xl',
                                     'color': '#A3A3A3FF',
                                     'flex': 2,
                                     'align': 'center',
-                                    'contents': []
                                 },
                                 {
                                     'type': 'text',
                                     'text': '火〜金（10:00-20:00）\n土日祝（10:00～18:00）',
-                                    'size': 'md',
+                                    'size': 'lg',
                                     'color': '#666666',
                                     'flex': 4,
                                     'align': 'center',
                                     'wrap': True,
-                                    'contents': []
                                 },
                                 {
                                     'type': 'spacer'
@@ -130,45 +131,28 @@ def closing_day_message_template():
                                 {
                                     'type': 'text',
                                     'text': '休館日',
-                                    'size': 'md',
+                                    'size': 'xl',
                                     'color': '#A3A3A3FF',
                                     'flex': 1,
                                     'align': 'center',
-                                    'contents': []
                                 },
                                 {
                                     'type': 'text',
                                     'text': ' 毎週月曜日(休日の場合は次の平日)、年末年始、特別整理期間',
-                                    'size': 'sm',
+                                    'size': 'lg',
                                     'color': '#666666',
                                     'flex': 4,
                                     'align': 'center',
                                     'wrap': True,
-                                    'contents': []
                                 }
                             ]
                         }
                     ]
                 }
             ]
-        },
-        'footer': {
-            'type': 'box',
-            'layout': 'horizontal',
-            'flex': 1,
-            'contents': [
-              {
-                  'type': 'button',
-                  'action': {
-                      'type': 'uri',
-                      'label': '公式サイト',
-                      'uri': 'https://www.akishimaensis.jp/'
-                  }
-              }
-            ]
         }
     }
-
+    
     return FlexSendMessage(alt_text=alt_text, contents=contents)
 
 

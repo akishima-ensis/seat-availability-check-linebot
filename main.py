@@ -59,6 +59,19 @@ def get_room_data():
     return rooms
 
 
+def create_message(message):
+    if message in room_ids.keys():
+        room_id = room_ids[message]
+        room_data = get_room_data()
+        for room in room_data:
+            if room.get('id') == room_id:
+                return flex_message_template.seats_info_message(room)
+    else:
+        return flex_message_template.failure_message_template()
+
+    return  flex_message_template.closing_day_message_template()
+
+
 @app.route('/callback', methods=['POST'])
 def callback():
     signature = request.headers['X-Line-Signature']
@@ -73,24 +86,13 @@ def callback():
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    received_message = event.message.text
-    reply_message = closing_day_message
-
-    if received_message in room_ids.keys():
-        room_id = room_ids[received_message]
-        rooms = get_room_data()
-        if rooms:
-            for room in rooms:
-                if room.get('id') == room_id:
-                    reply_message = flex_message_template.main_message_template(room)
-    else:
-        reply_message = failure_message
-
-    line_bot_api.reply_message(event.reply_token, messages=reply_message)
+    message = event.message.text
+    flex_message = create_message(message)
+    line_bot_api.reply_message(event.reply_token, messages=flex_message)
 
 
 if __name__ == '__main__':
     app.run(threaded=True)
 
     # debug
-    # app.run(host='0.0.0.0', port=8080, threaded=True, debug=True)
+    # app.run(host='0.0.0.0', port=8000, threaded=True, debug=True)

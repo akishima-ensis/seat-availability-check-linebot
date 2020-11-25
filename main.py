@@ -59,13 +59,14 @@ def create_message(message):
     if message in room_ids.keys():
         room_id = room_ids[message]
         room_data = get_room_data()
-        for room in room_data:
-            if room.get('id') == room_id:
-                return flex_message_template.seats_info_message(room)
+        if room_data:
+            for room in room_data:
+                if room.get('id') == room_id:
+                    return flex_message_template.seats_info_message(room)
     else:
         return flex_message_template.failure_message_template()
 
-    return  flex_message_template.closing_day_message_template()
+    return flex_message_template.closing_day_message_template()
 
 
 @app.route('/callback', methods=['POST'])

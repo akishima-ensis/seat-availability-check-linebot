@@ -36,10 +36,6 @@ room_ids = {
     'ティーンズ学習室': 5
 }
 
-# flex_message_template
-closing_day_message = flex_message_template.closing_day_message_template()
-failure_message = flex_message_template.failure_message_template()
-
 
 def get_room_data():
     jst = timezone(timedelta(hours=+9), 'JST')

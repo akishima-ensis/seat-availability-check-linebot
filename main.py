@@ -6,8 +6,7 @@ from flask import Flask, request, abort
 from linebot.models import MessageEvent, TextMessage
 from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
-import flex_message_template
-
+from src import flex_message_template
 
 debug = True
 

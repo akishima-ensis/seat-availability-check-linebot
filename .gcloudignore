@@ -1,4 +1,9 @@
 .git
 .idea
+.DS_Store
+.github
 .gitignore
 __pycache__
+src/serviceAccountKey.json
+README.md
+test.py

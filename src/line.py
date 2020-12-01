@@ -19,5 +19,8 @@ def callback():
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     input_message = event.message.text
+    user_id = event.source.user_id
+    user_name = line.get_profile(user_id).display_name
+    print(f"Received message: \"{input_message}\" from {user_name}")
     reply_message = message.create(input_message)
     line.reply_message(event.reply_token, messages=reply_message)

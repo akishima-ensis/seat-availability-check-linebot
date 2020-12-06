@@ -19,3 +19,16 @@ def get_room_data():
             before = (now - timedelta(minutes=1)).strftime('%H%M')
             rooms = rooms_ref.to_dict().get(before)
     return rooms
+
+
+def reserve_notice(user_id, room_name):
+    users_ref = db.collection('users').document(user_id)
+    data = {
+        'reserve_time': get_time(),
+        'reserved': True,
+        'room_name': room_name
+    }
+    if users_ref.get().exists:
+        users_ref.update(data)
+    else:
+        users_ref.set(data)

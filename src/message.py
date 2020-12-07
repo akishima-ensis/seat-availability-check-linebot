@@ -13,11 +13,11 @@ rooms = [
 def create(message):
     if message in rooms:
         room_name = message
-        room_data = firebase.get_room_data()
-        if room_data:
-            for room in room_data:
+        rooms_data = firebase.get_rooms_data()
+        if rooms_data:
+            for room in rooms_data['data']:
                 if room_name == room['name']:
-                    return flex_message_template.seats_info_message(room)
+                    return flex_message_template.seats_info_message(room, rooms_data['update'])
 
         return flex_message_template.closing_day_message_template()
 

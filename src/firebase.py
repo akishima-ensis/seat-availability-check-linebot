@@ -7,7 +7,7 @@ def get_time():
     return datetime.now(jst)
 
 
-def get_room_data():
+def get_rooms_data():
     now = get_time()
     date = now.strftime('%Y%m%d')
     time = now.strftime('%H%M')

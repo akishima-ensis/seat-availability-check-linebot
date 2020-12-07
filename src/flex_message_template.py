@@ -1,13 +1,12 @@
 from linebot.models import FlexSendMessage
 
 
-def seats_info_message(room):
+def seats_info_message(room, update):
 
     room_name = room['name']
     seats_num = room['seats_num']
     web_seats_num = room['web_seats_num']
     total_seats_num = room['total_seats_num']
-    update = room['update']
 
     seats_status_text = '空席あり'
     seats_status_color_code = '#94D0B6'

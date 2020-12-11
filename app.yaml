@@ -1,4 +1,4 @@
-runtime: python37
+runtime: python38
 env: standard
 entrypoint: gunicorn -b :$PORT main:app
 

@@ -4,16 +4,6 @@ from linebot.models import TextSendMessage
 from src import firebase, flex_message_template
 
 
-rooms = [
-    '学習席（有線LAN有）',
-    '学習席',
-    '研究個室',
-    'インターネット・DB席',
-    'グループ学習室',
-    'ティーンズ学習室'
-]
-
-
 def crete_seats_info_message(room_name):
     if rooms_data := firebase.get_rooms_data():
         for room_data in rooms_data['data']:

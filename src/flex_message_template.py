@@ -62,12 +62,101 @@ def seats_info_message(room, update):
         }
     }
 
+    if seats_num == 0:
+        contents.update({
+            'footer': {
+                'type': 'box',
+                'layout': 'horizontal',
+                'contents': [{
+                    'type': 'button',
+                    'action': {
+                        'type': 'message',
+                        'label': '(β) 空席ができたら通知する',
+                        'text': f'{room_name} 予約'
+                    },
+                    'height': 'sm',
+                    'style': 'primary',
+                    'position': 'relative'
+                }]
+            }})
     return FlexSendMessage(alt_text=alt_text, contents=contents)
 
 
-def closing_day_message_template():
-    alt_text = '現在は閉館しています'
+def done_reservation_message(room_name, notice_time):
+    alt_text = '空席通知予約完了'
+    contents = {
+        'type': 'bubble',
+        'direction': 'ltr',
+        'body': {
+            'type': 'box',
+            'layout': 'vertical',
+            'contents': [{
+                'type': 'text',
+                'text': room_name,
+                'size': 'xl',
+                'align': 'center',
+            },
+                {
+                    'type': 'separator',
+                    'margin': 'lg'
+                },
+                {
+                    'type': 'text',
+                    'text': notice_time,
+                    'weight': 'bold',
+                    'size': 'lg',
+                    'align': 'center',
+                    'margin': 'lg',
+                },
+                {
+                'type': 'text',
+                'text': '予約が完了しました。上記の時間の間に空席ができた場合に通知します。空席ができなかった場合、又は閉館時間になった場合、予約は自動的にキャンセルされます。',
+                'size': 'lg',
+                'align': 'center',
+                'margin': 'lg',
+                'wrap': True,
+                }
+            ]}
+    }
+    return FlexSendMessage(alt_text=alt_text, contents=contents)
 
+
+def confirm_new_reservation_message(reserved_room_name, new_reserve_room_name):
+    alt_text = '新規予約'
+    contents = {
+        'type': 'bubble',
+        'direction': 'ltr',
+        'body': {
+            'type': 'box',
+            'layout': 'vertical',
+            'contents': [{
+                'type': 'text',
+                'text': f'既に"{reserved_room_name}"の空席通知予約をしています。予約は1回につき1学習室できます。この予約をキャンセルして新規に空席通知予約を行いますか？',
+                'size': 'lg',
+                'align': 'center',
+                'wrap': True,
+              }]
+        },
+        'footer': {
+            'type': 'box',
+            'layout': 'horizontal',
+            'contents': [{
+                'type': 'button',
+                'action': {
+                  'type': 'message',
+                  'label': '(β) 新規予約',
+                  'text': f'{new_reserve_room_name} 新規予約'
+                },
+                'height': 'sm',
+                'style': 'primary'
+            }]
+        }
+    }
+    return FlexSendMessage(alt_text=alt_text, contents=contents)
+
+
+def closing_day_message():
+    alt_text = '現在は閉館しています。'
     contents = {
         'type': 'bubble',
         'direction': 'ltr',
@@ -151,111 +240,35 @@ def closing_day_message_template():
             ]
         }
     }
-    
     return FlexSendMessage(alt_text=alt_text, contents=contents)
 
 
-def failure_message_template():
-    alt_text = '正しい部屋名を入力してください'
+def failure_message():
+    alt_text = '正しい学習室名を入力してください'
     contents = {
-      'type': 'bubble',
-      'body': {
-        'type': 'box',
-        'layout': 'vertical',
-        'contents': [
-          {
-            'type': 'text',
-            'text': '正しい部屋を入力してください',
-            'size': 'lg',
-            'align': 'center',
-            'contents': []
-          },
-          {
-            'type': 'separator',
-            'margin': 'lg'
-          },
-          {
-            'type': 'button',
-            'action': {
-              'type': 'message',
-              'label': '学習席（有線LAN有）',
-              'text': '学習席（有線LAN有）'
+        'type': 'bubble',
+        'body': {
+            'type': 'box',
+            'layout': 'vertical',
+            'contents': [{
+                'type': 'text',
+                'text': '正しく入力してください',
+                'size': 'xl',
+                'color': '#000000FF',
+                'align': 'center',
             },
-            'height': 'sm',
-            'style': 'secondary'
-          },
-          {
-            'type': 'separator',
-            'margin': 'xs'
-          },
-          {
-            'type': 'button',
-            'action': {
-              'type': 'message',
-              'label': '学習席',
-              'text': '学習席'
-            },
-            'height': 'sm',
-            'style': 'secondary'
-          },
-          {
-            'type': 'separator',
-            'margin': 'xs'
-          },
-          {
-            'type': 'button',
-            'action': {
-              'type': 'message',
-              'label': '研究個室',
-              'text': '研究個室'
-            },
-            'height': 'sm',
-            'style': 'secondary'
-          },
-          {
-            'type': 'separator',
-            'margin': 'xs'
-          },
-          {
-            'type': 'button',
-            'action': {
-              'type': 'message',
-              'label': 'インターネット・DB席',
-              'text': 'インターネット・DB席'
-            },
-            'height': 'sm',
-            'style': 'secondary'
-          },
-          {
-            'type': 'separator',
-            'margin': 'xs'
-          },
-          {
-            'type': 'button',
-            'action': {
-              'type': 'message',
-              'label': 'グループ学習室',
-              'text': 'グループ学習室'
-            },
-            'height': 'sm',
-            'style': 'secondary'
-          },
-          {
-            'type': 'separator',
-            'margin': 'xs'
-          },
-          {
-            'type': 'button',
-            'action': {
-              'type': 'message',
-              'label': 'ティーンズ学習室',
-              'text': 'ティーンズ学習室'
-            },
-            'height': 'sm',
-            'style': 'secondary'
-          }
-        ]
-      }
+                {
+                    'type': 'separator',
+                    'margin': 'lg'
+                },
+                {
+                    'type': 'text',
+                    'text': '下記のメニューに存在する学習室名を入力してください。',
+                    'size': 'lg',
+                    'align': 'center',
+                    'margin': 'md',
+                    'wrap': True,
+                }]
+        }
     }
-
     return FlexSendMessage(alt_text=alt_text, contents=contents)

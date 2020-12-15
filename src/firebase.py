@@ -21,10 +21,23 @@ def get_rooms_data():
     return rooms
 
 
+def check_reserve_notice(user_id):
+    user_ref = db.collection('users').document(user_id).get()
+    if user_ref.exists:
+        data = user_ref.to_dict()
+        if data['reserved']:
+            return {'reserved': True, 'name': data['room_name']}
+        else:
+            return {'reserved': False}
+    else:
+        return {'reserved': False}
+
+
 def reserve_notice(user_id, room_name):
+    now = get_time()
     users_ref = db.collection('users').document(user_id)
     data = {
-        'reserve_time': get_time(),
+        'reserve_time': now,
         'reserved': True,
         'room_name': room_name
     }
@@ -32,3 +45,4 @@ def reserve_notice(user_id, room_name):
         users_ref.update(data)
     else:
         users_ref.set(data)
+    return now

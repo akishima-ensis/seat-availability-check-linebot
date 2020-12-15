@@ -131,7 +131,7 @@ def confirm_new_reservation_message(reserved_room_name, new_reserve_room_name):
             'layout': 'vertical',
             'contents': [{
                 'type': 'text',
-                'text': f'既に"{reserved_room_name}"の空席通知予約をしています。予約は1回につき1学習室できます。この予約をキャンセルして新規に空席通知予約を行いますか？',
+                'text': f'既に"{reserved_room_name}"の空席通知予約をしています。既に予約されている場合その予約をキャンセルして新規に空席通知予約をおこうなう必要があります。',
                 'size': 'lg',
                 'align': 'center',
                 'wrap': True,

@@ -103,7 +103,7 @@ def done_reservation_message(room_name, notice_time):
                 },
                 {
                     'type': 'text',
-                    'text': notice_time,
+                    'text': f'予約完了 {notice_time}',
                     'weight': 'bold',
                     'size': 'lg',
                     'align': 'center',
@@ -111,7 +111,7 @@ def done_reservation_message(room_name, notice_time):
                 },
                 {
                 'type': 'text',
-                'text': '予約が完了しました。上記の時間の間に空席ができた場合に通知します。空席ができなかった場合、又は閉館時間になった場合、予約は自動的にキャンセルされます。',
+                'text': '上記の時間から1時間以内に空席ができた場合に通知します。空席ができなかった場合、閉館時間になった場合、予約は自動的にキャンセルされます。',
                 'size': 'lg',
                 'align': 'center',
                 'margin': 'lg',

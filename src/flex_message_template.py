@@ -74,6 +74,7 @@ def seats_info_message(room, update):
                         'label': '(β) 空席ができたら通知する',
                         'text': f'{room_name} 予約'
                     },
+                    'color': '#FF6E6C',
                     'height': 'sm',
                     'style': 'primary',
                     'position': 'relative'
@@ -147,6 +148,7 @@ def confirm_new_reservation_message(reserved_room_name, new_reserve_room_name):
                   'label': '(β) 新規予約',
                   'text': f'{new_reserve_room_name} 新規予約'
                 },
+                'color': '#FF6E6C',
                 'height': 'sm',
                 'style': 'primary'
             }]

@@ -45,4 +45,4 @@ def create_new_reserve_notice_message(room_name, user_id):
 
 
 def create_failure_message():
-    return TextSendMessage(text='入力に謝りがあります。')
+    return TextSendMessage(text='入力に誤りがあります。')

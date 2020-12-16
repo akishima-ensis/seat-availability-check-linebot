@@ -5,7 +5,7 @@
 🐳 アキシマエンシス（昭島市教育福祉総合センター）における学習室の空席状況を調べることができるLINEbot
 
 ## Demo
-![](https://user-images.githubusercontent.com/34241526/100546468-ccfba000-32a4-11eb-8b06-3ed7dbb57121.png)
+![](https://user-images.githubusercontent.com/34241526/102311103-982f5e80-3faf-11eb-8162-9a129caa4fc7.png)
 ## DataSource
 
 [昭島市民図書館 - WEB予約](https://webreserv.library.akishima.tokyo.jp/webReserv/AreaInfo/Login)
@@ -15,8 +15,11 @@
 ## Features
 
 ```
-学習室名（昭島市民図書館のサイトにある学習室名）
+{学習室名}（昭島市民図書館のサイトにある学習室名）
 > 入力された学習室の空席状況を出力します
+
+{学習室名} 予約
+> 学習室の空席通知予約を行います
 
 ヘルプ
 > LINEBotの使い方、作者、リポジトリなどの情報を出力します
@@ -24,6 +27,6 @@
 
 ## How it works
 
-![](https://user-images.githubusercontent.com/34241526/100699483-72fef580-33de-11eb-81ed-99e3a6f0b9fa.png)
+![](https://user-images.githubusercontent.com/34241526/102199805-6367cc80-3f07-11eb-9e56-4087250373e5.png)
 
 [diagrams.net](https://app.diagrams.net/)

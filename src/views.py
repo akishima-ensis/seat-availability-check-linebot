@@ -1,47 +1,52 @@
 from linebot.models import TextSendMessage
-
-from src import models, flex_message_template
+from src.models import (
+    get_rooms_data, check_reserve_notice, reserve_notice
+)
+from src.flex_message_template import (
+    seats_info_message, closing_day_message,
+    done_reservation_message, confirm_new_reservation_message
+)
 
 
 def crete_seats_info_message(room_name):
-    if rooms_data := models.get_rooms_data():
+    if rooms_data := get_rooms_data():
         for room_data in rooms_data['data']:
             if room_name == room_data['name']:
-                return flex_message_template.seats_info_message(room_data, rooms_data['update'])
+                return seats_info_message(room_data, rooms_data['update'])
     else:
-        return flex_message_template.closing_day_message()
+        return closing_day_message()
 
 
 def create_reserve_notice_message(room_name, user_id):
-    if rooms_data := models.get_rooms_data():
+    if rooms_data := get_rooms_data():
         for room_data in rooms_data['data']:
             if room_name == room_data['name']:
                 if room_data['seats_num'] == 0:
-                    is_reserved = models.check_reserve_notice(user_id)
+                    is_reserved = check_reserve_notice(user_id)
                     if is_reserved['reserved']:
-                        return flex_message_template.confirm_new_reservation_message(is_reserved['name'], room_name)
+                        return confirm_new_reservation_message(is_reserved['name'], room_name)
                     else:
-                        reserve_time = models.reserve_notice(user_id, room_name)
+                        reserve_time = reserve_notice(user_id, room_name)
                         notice_time = f'{str(reserve_time.hour).zfill(2)}:{str(reserve_time.minute).zfill(2)}'
-                        return flex_message_template.done_reservation_message(room_name, notice_time)
+                        return done_reservation_message(room_name, notice_time)
                 else:
                     return TextSendMessage(text=f'{room_name}は空席があります。')
     else:
-        return flex_message_template.closing_day_message()
+        return closing_day_message()
 
 
 def create_new_reserve_notice_message(room_name, user_id):
-    if rooms_data := models.get_rooms_data():
+    if rooms_data := get_rooms_data():
         for room_data in rooms_data['data']:
             if room_name == room_data['name']:
                 if room_data['seats_num'] == 0:
-                    reserve_time = models.reserve_notice(user_id, room_name)
+                    reserve_time = reserve_notice(user_id, room_name)
                     notice_time = f'{str(reserve_time.hour).zfill(2)}:{str(reserve_time.minute).zfill(2)}'
-                    return flex_message_template.done_reservation_message(room_name, notice_time)
+                    return done_reservation_message(room_name, notice_time)
                 else:
                     return TextSendMessage(text=f'{room_name}は空席があります。')
     else:
-        return flex_message_template.closing_day_message()
+        return closing_day_message()
 
 
 def create_failure_message():

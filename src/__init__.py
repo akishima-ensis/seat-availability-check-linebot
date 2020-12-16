@@ -28,6 +28,6 @@ db = firestore.client()
 
 
 # Including other scripts
-import src.line
-import src.message
-import src.firebase
+import src.controller
+import src.views
+import src.models

@@ -245,6 +245,38 @@ def closing_day_message():
     return FlexSendMessage(alt_text=alt_text, contents=contents)
 
 
+def failed_to_get_data_message():
+    alt_text = 'データの取得に失敗しました。'
+    contents = {
+        "type": "bubble",
+        "direction": "ltr",
+        "body":{
+            "type": "box",
+            "layout": "vertical",
+            "contents": [{
+                "type": "text",
+                "text": "データ取得失敗",
+                "size": "xl",
+                "align": "center",
+              },
+                {
+                "type": "separator",
+                "margin": "lg"
+              },
+                {
+                "type": "text",
+                "text": "データの取得に失敗しました。数分経ってからもう一度お試しください。",
+                "size": "lg",
+                "align": "center",
+                "margin": "lg",
+                "wrap": True,
+                }
+            ]
+        }
+    }
+    return FlexSendMessage(alt_text=alt_text, contents=contents)
+
+
 def failure_message():
     alt_text = '正しい学習室名を入力してください'
     contents = {

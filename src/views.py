@@ -3,13 +3,15 @@ from src.models import (
     get_rooms_data, check_reserve_notice, reserve_notice
 )
 from src.flex_message_template import (
-    seats_info_message, closing_day_message,
+    seats_info_message, closing_day_message, failed_to_get_data_message,
     done_reservation_message, confirm_new_reservation_message
 )
 
 
 def crete_seats_info_message(room_name):
     if rooms_data := get_rooms_data():
+        if not rooms_data['status']:
+            return failed_to_get_data_message()
         for room_data in rooms_data['data']:
             if room_name == room_data['name']:
                 return seats_info_message(room_data, rooms_data['update'])
@@ -19,6 +21,8 @@ def crete_seats_info_message(room_name):
 
 def create_reserve_notice_message(room_name, user_id):
     if rooms_data := get_rooms_data():
+        if not rooms_data['status']:
+            return failed_to_get_data_message()
         for room_data in rooms_data['data']:
             if room_name == room_data['name']:
                 if room_data['seats_num'] == 0:
@@ -37,6 +41,8 @@ def create_reserve_notice_message(room_name, user_id):
 
 def create_new_reserve_notice_message(room_name, user_id):
     if rooms_data := get_rooms_data():
+        if not rooms_data['status']:
+            return failed_to_get_data_message()
         for room_data in rooms_data['data']:
             if room_name == room_data['name']:
                 if room_data['seats_num'] == 0:

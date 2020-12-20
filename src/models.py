@@ -12,13 +12,13 @@ def get_rooms_data():
     date = now.strftime('%Y%m%d')
     time = now.strftime('%H%M')
     rooms_ref = db.collection('rooms').document(date).get()
-    rooms = []
+    rooms_data = None
     if rooms_ref.exists:
-        rooms = rooms_ref.to_dict().get(time)
-        if not rooms:
+        rooms_data = rooms_ref.to_dict().get(time)
+        if not rooms_data:
             before = (now - timedelta(minutes=1)).strftime('%H%M')
-            rooms = rooms_ref.to_dict().get(before)
-    return rooms
+            rooms_data = rooms_ref.to_dict().get(before)
+    return rooms_data
 
 
 def check_reserve_notice(user_id):

@@ -85,6 +85,46 @@ def seats_info_message(room, update):
     return FlexSendMessage(alt_text=alt_text, contents=contents)
 
 
+def confirm_new_reservation_message(reserved_room_name, new_reserve_room_name):
+    alt_text = '新規予約'
+    contents = {
+        'type': 'bubble',
+        'direction': 'ltr',
+        'body': {
+            'type': 'box',
+            'layout': 'vertical',
+            'contents':
+                [
+                    {
+                        'type': 'text',
+                        'text': f'既に"{reserved_room_name}"の空席通知予約をしています。既に予約されている場合、その予約をキャンセルして新規に空席通知予約を行う必要があります。',
+                        'size': 'lg',
+                        'align': 'start',
+                        'wrap': True,
+                    }
+                ]
+        },
+        'footer': {
+            'type': 'box',
+            'layout': 'horizontal',
+            'contents': [
+                {
+                    'type': 'button',
+                    'action': {
+                        'type': 'message',
+                        'label': '(β) 新規予約',
+                        'text': f'{new_reserve_room_name} 新規予約'
+                    },
+                    'color': '#FF6E6C',
+                    'height': 'sm',
+                    'style': 'primary'
+                }
+            ]
+        }
+    }
+    return FlexSendMessage(alt_text=alt_text, contents=contents)
+
+
 def done_reservation_message(room_name, notice_time):
     alt_text = '空席通知予約完了'
     contents = {
@@ -116,49 +156,9 @@ def done_reservation_message(room_name, notice_time):
                     'type': 'text',
                     'text': '上記の時間から1時間以内に空席ができた場合に通知します。空席ができなかった場合、閉館時間になった場合、予約は自動的にキャンセルされます。',
                     'size': 'lg',
-                    'align': 'center',
+                    'align': 'start',
                     'margin': 'lg',
                     'wrap': True,
-                }
-            ]
-        }
-    }
-    return FlexSendMessage(alt_text=alt_text, contents=contents)
-
-
-def confirm_new_reservation_message(reserved_room_name, new_reserve_room_name):
-    alt_text = '新規予約'
-    contents = {
-        'type': 'bubble',
-        'direction': 'ltr',
-        'body': {
-            'type': 'box',
-            'layout': 'vertical',
-            'contents':
-                [
-                    {
-                        'type': 'text',
-                        'text': f'既に"{reserved_room_name}"の空席通知予約をしています。既に予約されている場合、その予約をキャンセルして新規に空席通知予約を行う必要があります。',
-                        'size': 'lg',
-                        'align': 'center',
-                        'wrap': True,
-                    }
-                ]
-        },
-        'footer': {
-            'type': 'box',
-            'layout': 'horizontal',
-            'contents': [
-                {
-                    'type': 'button',
-                    'action': {
-                        'type': 'message',
-                        'label': '(β) 新規予約',
-                        'text': f'{new_reserve_room_name} 新規予約'
-                    },
-                    'color': '#FF6E6C',
-                    'height': 'sm',
-                    'style': 'primary'
                 }
             ]
         }
@@ -241,7 +241,7 @@ def closing_day_message():
                                     'size': 'lg',
                                     'color': '#666666',
                                     'flex': 4,
-                                    'align': 'center',
+                                    'align': 'start',
                                     'wrap': True,
                                 }
                             ]
@@ -277,7 +277,7 @@ def failed_to_get_data_message():
                     'type': 'text',
                     'text': 'データの取得に失敗しました。数分経ってからもう一度お試しください。',
                     'size': 'lg',
-                    'align': 'center',
+                    'align': 'start',
                     'margin': 'lg',
                     'wrap': True,
                 }
@@ -287,8 +287,8 @@ def failed_to_get_data_message():
     return FlexSendMessage(alt_text=alt_text, contents=contents)
 
 
-def failure_message():
-    alt_text = '正しい学習室名を入力してください'
+def typing_failed_message():
+    alt_text = '入力された値が間違っています。'
     contents = {
         'type': 'bubble',
         'body': {
@@ -299,7 +299,6 @@ def failure_message():
                     'type': 'text',
                     'text': '正しく入力してください',
                     'size': 'xl',
-                    'color': '#000000FF',
                     'align': 'center',
                 },
                 {
@@ -308,11 +307,28 @@ def failure_message():
                 },
                 {
                     'type': 'text',
-                    'text': '下記のメニューに存在する学習室名を入力してください。',
+                    'text': 'リッチメニューに存在する学習室名を入力してください。このLINEbotについて詳しい情報は下記のリンクにある当プログラムのGitHubリポジトリをご覧ください。',
                     'size': 'lg',
-                    'align': 'center',
+                    'align': 'start',
                     'margin': 'md',
                     'wrap': True,
+                }
+            ]
+        },
+        'footer': {
+            'type': 'box',
+            'layout': 'vertical',
+            'flex': 0,
+            'spacing': 'sm',
+            'contents': [
+                {
+                    'type': 'button',
+                    'action': {
+                        'type': 'uri',
+                        'label': 'GitHub',
+                        'uri': 'https://github.com/akishima-ensis/seat-availability-check-linebot'
+                    },
+                    'style': 'link'
                 }
             ]
         }

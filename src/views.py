@@ -3,8 +3,8 @@ from src.models import (
     get_rooms_data, check_reserve_notice, reserve_notice
 )
 from src.flex_message_template import (
-    seats_info_message, closing_day_message, failed_to_get_data_message,
-    done_reservation_message, confirm_new_reservation_message
+    seats_info_message,  done_reservation_message, confirm_new_reservation_message,
+    closing_day_message, failed_to_get_data_message, typing_failed_message
 )
 
 
@@ -56,4 +56,4 @@ def create_new_reserve_notice_message(room_name, user_id):
 
 
 def create_failure_message():
-    return TextSendMessage(text='入力に誤りがあります。')
+    return typing_failed_message()

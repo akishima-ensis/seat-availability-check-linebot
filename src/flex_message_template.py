@@ -2,7 +2,6 @@ from linebot.models import FlexSendMessage
 
 
 def seats_info_message(room, update):
-
     room_name = room['name']
     seats_num = room['seats_num']
     web_seats_num = room['web_seats_num']
@@ -67,19 +66,22 @@ def seats_info_message(room, update):
             'footer': {
                 'type': 'box',
                 'layout': 'horizontal',
-                'contents': [{
-                    'type': 'button',
-                    'action': {
-                        'type': 'message',
-                        'label': '(β) 空席ができたら通知する',
-                        'text': f'{room_name} 予約'
-                    },
-                    'color': '#FF6E6C',
-                    'height': 'sm',
-                    'style': 'primary',
-                    'position': 'relative'
-                }]
-            }})
+                'contents': [
+                    {
+                        'type': 'button',
+                        'action': {
+                            'type': 'message',
+                            'label': '(β) 空席ができたら通知する',
+                            'text': f'{room_name} 予約'
+                        },
+                        'color': '#FF6E6C',
+                        'height': 'sm',
+                        'style': 'primary',
+                        'position': 'relative'
+                    }
+                ]
+            }
+        })
     return FlexSendMessage(alt_text=alt_text, contents=contents)
 
 
@@ -91,12 +93,13 @@ def done_reservation_message(room_name, notice_time):
         'body': {
             'type': 'box',
             'layout': 'vertical',
-            'contents': [{
-                'type': 'text',
-                'text': room_name,
-                'size': 'xl',
-                'align': 'center',
-            },
+            'contents': [
+                {
+                    'type': 'text',
+                    'text': room_name,
+                    'size': 'xl',
+                    'align': 'center',
+                },
                 {
                     'type': 'separator',
                     'margin': 'lg'
@@ -110,14 +113,15 @@ def done_reservation_message(room_name, notice_time):
                     'margin': 'lg',
                 },
                 {
-                'type': 'text',
-                'text': '上記の時間から1時間以内に空席ができた場合に通知します。空席ができなかった場合、閉館時間になった場合、予約は自動的にキャンセルされます。',
-                'size': 'lg',
-                'align': 'center',
-                'margin': 'lg',
-                'wrap': True,
+                    'type': 'text',
+                    'text': '上記の時間から1時間以内に空席ができた場合に通知します。空席ができなかった場合、閉館時間になった場合、予約は自動的にキャンセルされます。',
+                    'size': 'lg',
+                    'align': 'center',
+                    'margin': 'lg',
+                    'wrap': True,
                 }
-            ]}
+            ]
+        }
     }
     return FlexSendMessage(alt_text=alt_text, contents=contents)
 
@@ -130,28 +134,33 @@ def confirm_new_reservation_message(reserved_room_name, new_reserve_room_name):
         'body': {
             'type': 'box',
             'layout': 'vertical',
-            'contents': [{
-                'type': 'text',
-                'text': f'既に"{reserved_room_name}"の空席通知予約をしています。既に予約されている場合、その予約をキャンセルして新規に空席通知予約を行う必要があります。',
-                'size': 'lg',
-                'align': 'center',
-                'wrap': True,
-              }]
+            'contents':
+                [
+                    {
+                        'type': 'text',
+                        'text': f'既に"{reserved_room_name}"の空席通知予約をしています。既に予約されている場合、その予約をキャンセルして新規に空席通知予約を行う必要があります。',
+                        'size': 'lg',
+                        'align': 'center',
+                        'wrap': True,
+                    }
+                ]
         },
         'footer': {
             'type': 'box',
             'layout': 'horizontal',
-            'contents': [{
-                'type': 'button',
-                'action': {
-                  'type': 'message',
-                  'label': '(β) 新規予約',
-                  'text': f'{new_reserve_room_name} 新規予約'
-                },
-                'color': '#FF6E6C',
-                'height': 'sm',
-                'style': 'primary'
-            }]
+            'contents': [
+                {
+                    'type': 'button',
+                    'action': {
+                        'type': 'message',
+                        'label': '(β) 新規予約',
+                        'text': f'{new_reserve_room_name} 新規予約'
+                    },
+                    'color': '#FF6E6C',
+                    'height': 'sm',
+                    'style': 'primary'
+                }
+            ]
         }
     }
     return FlexSendMessage(alt_text=alt_text, contents=contents)
@@ -248,28 +257,29 @@ def closing_day_message():
 def failed_to_get_data_message():
     alt_text = 'データの取得に失敗しました。'
     contents = {
-        "type": "bubble",
-        "direction": "ltr",
-        "body":{
-            "type": "box",
-            "layout": "vertical",
-            "contents": [{
-                "type": "text",
-                "text": "データ取得失敗",
-                "size": "xl",
-                "align": "center",
-              },
+        'type': 'bubble',
+        'direction': 'ltr',
+        'body': {
+            'type': 'box',
+            'layout': 'vertical',
+            'contents': [
                 {
-                "type": "separator",
-                "margin": "lg"
-              },
+                    'type': 'text',
+                    'text': 'データ取得失敗',
+                    'size': 'xl',
+                    'align': 'center',
+                },
                 {
-                "type": "text",
-                "text": "データの取得に失敗しました。数分経ってからもう一度お試しください。",
-                "size": "lg",
-                "align": "center",
-                "margin": "lg",
-                "wrap": True,
+                    'type': 'separator',
+                    'margin': 'lg'
+                },
+                {
+                    'type': 'text',
+                    'text': 'データの取得に失敗しました。数分経ってからもう一度お試しください。',
+                    'size': 'lg',
+                    'align': 'center',
+                    'margin': 'lg',
+                    'wrap': True,
                 }
             ]
         }
@@ -284,13 +294,14 @@ def failure_message():
         'body': {
             'type': 'box',
             'layout': 'vertical',
-            'contents': [{
-                'type': 'text',
-                'text': '正しく入力してください',
-                'size': 'xl',
-                'color': '#000000FF',
-                'align': 'center',
-            },
+            'contents': [
+                {
+                    'type': 'text',
+                    'text': '正しく入力してください',
+                    'size': 'xl',
+                    'color': '#000000FF',
+                    'align': 'center',
+                },
                 {
                     'type': 'separator',
                     'margin': 'lg'
@@ -302,7 +313,8 @@ def failure_message():
                     'align': 'center',
                     'margin': 'md',
                     'wrap': True,
-                }]
+                }
+            ]
         }
     }
     return FlexSendMessage(alt_text=alt_text, contents=contents)

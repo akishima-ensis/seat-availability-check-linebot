@@ -307,7 +307,7 @@ def typing_failed_message():
                 },
                 {
                     'type': 'text',
-                    'text': 'リッチメニューに存在する学習室名を入力してください。このLINEbotについて詳しい情報は下記のリンクにある当プログラムのGitHubリポジトリをご覧ください。',
+                    'text': 'リッチメニューに存在する学習室名を入力してください。当チャットボットについて詳しい情報は下記のリンクにある当プログラムのGitHubリポジトリをご覧ください。',
                     'size': 'lg',
                     'align': 'start',
                     'margin': 'md',
@@ -325,7 +325,7 @@ def typing_failed_message():
                     'type': 'button',
                     'action': {
                         'type': 'uri',
-                        'label': 'GitHub',
+                        'label': 'GitHubリポジトリ',
                         'uri': 'https://github.com/akishima-ensis/seat-availability-check-linebot'
                     },
                     'style': 'link'
@@ -334,3 +334,124 @@ def typing_failed_message():
         }
     }
     return FlexSendMessage(alt_text=alt_text, contents=contents)
+
+
+def usage_message():
+    alt_text = 'test'
+    contents = {
+      'type': 'bubble',
+      'direction': 'ltr',
+      'body': {
+        'type': 'box',
+        'layout': 'vertical',
+        'contents': [
+          {
+            'type': 'box',
+            'layout': 'vertical',
+            'spacing': 'lg',
+            'contents': [
+              {
+                'type': 'box',
+                'layout': 'vertical',
+                'contents': [
+                  {
+                    'type': 'text',
+                    'text': '使い方',
+                    'size': 'xl',
+                    'align': 'center',
+                    'contents': []
+                  },
+                  {
+                    'type': 'separator',
+                    'margin': 'xl'
+                  }
+                ]
+              },
+              {
+                'type': 'box',
+                'layout': 'vertical',
+                'spacing': 'sm',
+                'contents': [
+                  {
+                    'type': 'text',
+                    'text': '空席状況の取得',
+                    'weight': 'regular',
+                    'align': 'start',
+                    'gravity': 'center',
+                    'contents': []
+                  },
+                  {
+                    'type': 'button',
+                    'action': {
+                      'type': 'message',
+                      'label': '{学習室名}',
+                      'text': '研究個室'
+                    },
+                    'height': 'sm',
+                    'style': 'primary'
+                  },
+                  {
+                    'type': 'separator',
+                    'margin': 'xl'
+                  }
+                ]
+              },
+              {
+                'type': 'box',
+                'layout': 'vertical',
+                'spacing': 'sm',
+                'contents': [
+                  {
+                    'type': 'text',
+                    'text': '空席ができたら通知する',
+                    'contents': []
+                  },
+                  {
+                    'type': 'button',
+                    'action': {
+                      'type': 'message',
+                      'label': '{学習室名} 予約',
+                      'text': '研究個室 予約'
+                    },
+                    'height': 'sm',
+                    'style': 'primary'
+                  },
+                  {
+                    'type': 'separator',
+                    'margin': 'xl'
+                  }
+                ]
+              },
+              {
+                'type': 'box',
+                'layout': 'vertical',
+                'spacing': 'sm',
+                'contents': [
+                  {
+                    'type': 'text',
+                    'text': '予約をキャンセルして新規予約',
+                    'contents': []
+                  },
+                  {
+                    'type': 'button',
+                    'action': {
+                      'type': 'message',
+                      'label': '{学習室名} 新規予約',
+                      'text': '研究個室 新規予約'
+                    },
+                    'height': 'sm',
+                    'style': 'primary'
+                  },
+                  {
+                    'type': 'separator',
+                    'margin': 'xl'
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+    return FlexSendMessage(alt_text=alt_text, contents=contents)
+

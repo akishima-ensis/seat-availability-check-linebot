@@ -4,7 +4,7 @@ from src.models import (
 )
 from src.flex_message_template import (
     seats_info_message,  done_reservation_message, confirm_new_reservation_message,
-    closing_day_message, failed_to_get_data_message, typing_failed_message
+    closing_day_message, failed_to_get_data_message, usage_message
 )
 
 
@@ -55,5 +55,5 @@ def create_new_reserve_notice_message(room_name, user_id):
         return closing_day_message()
 
 
-def create_failure_message():
-    return typing_failed_message()
+def create_usage_message():
+    return usage_message()

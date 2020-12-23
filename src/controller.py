@@ -5,7 +5,7 @@ from linebot.exceptions import InvalidSignatureError
 from src import app, handler, line
 from src.views import (
     crete_seats_info_message, create_reserve_notice_message,
-    create_new_reserve_notice_message, create_failure_message
+    create_new_reserve_notice_message, create_usage_message
 )
 
 
@@ -52,8 +52,11 @@ def handle_message(event):
         room_name = re.findall('(.+) 新規予約', message)[0]
         reply_message = create_new_reserve_notice_message(room_name, user_id)
 
+    elif message == '使い方':
+        reply_message = create_usage_message()
+
     # 予期しないメッセージへの対応
     else:
-        reply_message = create_failure_message()
+        reply_message = create_usage_message()
 
     line.reply_message(event.reply_token, reply_message)

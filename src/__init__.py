@@ -3,6 +3,7 @@ import os
 from flask import Flask
 
 app = Flask(__name__)
+app.debug = bool(os.environ.get('DEBUG'))
 
 
 # setup line-bot-sdk

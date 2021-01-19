@@ -1,6 +1,11 @@
 import re
+from random import randint
 from flask import request, abort
-from linebot.models import MessageEvent, TextMessage
+from linebot.models import (
+    MessageEvent, TextSendMessage, StickerSendMessage,
+    TextMessage, ImageMessage, VideoMessage, AudioMessage,
+    LocationMessage, StickerMessage, FileMessage
+)
 from linebot.exceptions import InvalidSignatureError
 from src import app, handler, line
 from src.views import (
@@ -16,6 +21,14 @@ rooms = [
     'インターネット・DB席',
     'グループ学習室',
     'ティーンズ学習室'
+]
+
+sticker_messages = [
+    StickerSendMessage(package_id=11537, sticker_id=52002753),
+    StickerSendMessage(package_id=11537, sticker_id=52002739),
+    StickerSendMessage(package_id=11537, sticker_id=52002757),
+    StickerSendMessage(package_id=11539, sticker_id=52114110),
+    StickerSendMessage(package_id=11539, sticker_id=52114121),
 ]
 
 
@@ -60,3 +73,21 @@ def handle_message(event):
         reply_message = create_usage_message()
 
     line.reply_message(event.reply_token, reply_message)
+
+
+@handler.add(MessageEvent, message=[ImageMessage, VideoMessage, AudioMessage, LocationMessage, StickerMessage, FileMessage])
+def handle_other_message(event):
+    message_type = event.message.type
+    user_id = event.source.user_id
+    user_name = line.get_profile(user_id).display_name
+    print(f"Received message type: \"{message_type}\" from {user_name}")
+
+    text = '送信されたメッセージタイプに対応していません。下記のリッチメニューから学習室名をタッチするか、学習室名を直接入力してください。'
+    n = randint(0, len(sticker_messages)-1)
+    line.reply_message(
+        event.reply_token,
+        messages=[
+            TextSendMessage(text=text),
+            sticker_messages[n]
+        ]
+    )

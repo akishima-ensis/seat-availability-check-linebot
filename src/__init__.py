@@ -1,16 +1,17 @@
 # setup for flask
-import os
+import config
 from flask import Flask
 
 app = Flask(__name__)
-app.debug = bool(os.environ.get('DEBUG'))
+DEBUG = config.DEBUG
+app.debug = DEBUG
 
 
 # setup line-bot-sdk
 from linebot import LineBotApi, WebhookHandler
 
-LINE_CHANNEL_ACCESS_TOKEN = os.environ.get('LINE_CHANNEL_ACCESS_TOKEN')
-LINE_CHANNEL_SECRET = os.environ.get('LINE_CHANNEL_SECRET')
+LINE_CHANNEL_ACCESS_TOKEN = config.LINE_CHANNEL_ACCESS_TOKEN
+LINE_CHANNEL_SECRET = config.LINE_CHANNEL_SECRET
 line = LineBotApi(LINE_CHANNEL_ACCESS_TOKEN)
 handler = WebhookHandler(LINE_CHANNEL_SECRET)
 
@@ -19,9 +20,9 @@ handler = WebhookHandler(LINE_CHANNEL_SECRET)
 import firebase_admin
 from firebase_admin import credentials, firestore
 
-cred_key = 'src/serviceAccountKey.json'
-if os.path.exists(cred_key):
-    cred = credentials.Certificate(cred_key)
+if DEBUG:
+    SERVICE_ACCOUNT_KEY = config.SERVICE_ACCOUNT_KEY
+    cred = credentials.Certificate(SERVICE_ACCOUNT_KEY)
     firebase_admin.initialize_app(cred)
 else:
     firebase_admin.initialize_app()

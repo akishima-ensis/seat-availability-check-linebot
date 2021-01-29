@@ -1,2 +1,2 @@
-src/serviceAccountKey.json
 venv
+.env

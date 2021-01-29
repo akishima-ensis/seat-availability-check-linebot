@@ -1,4 +1,5 @@
-flask
-firebase-admin
-gunicorn
-line-bot-sdk == 1.17.0
+flask >= 1.1.2
+firebase-admin >= 4.5.1
+gunicorn >= 20.0.4
+line-bot-sdk >= 1.17.0
+python-dotenv >= 0.15.0

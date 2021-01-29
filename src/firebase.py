@@ -4,7 +4,7 @@ from datetime import datetime, timedelta
 from src import db, jst
 
 
-def get_rooms_data() -> Dict:
+def get_rooms_data() -> Union[Dict, None]:
     """
     最新の空席情報の取得
 
@@ -15,13 +15,12 @@ def get_rooms_data() -> Dict:
     date = now.strftime('%Y%m%d')
     time = now.strftime('%H%M')
     rooms_ref = db.collection('rooms').document(date).get()
-    rooms_data = None
     if rooms_ref.exists:
         rooms_data = rooms_ref.to_dict().get(time)
         if not rooms_data:
             before = (now - timedelta(minutes=1)).strftime('%H%M')
             rooms_data = rooms_ref.to_dict().get(before)
-    return rooms_data
+        return rooms_data
 
 
 def get_reserved_room(user_id: str) -> Union[str, None]:

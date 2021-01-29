@@ -1,7 +1,18 @@
+from typing import Dict
 from linebot.models import FlexSendMessage
 
 
-def seats_info_message(room, update):
+def seats_info_message(room: Dict, update: str) -> FlexSendMessage:
+    """
+    空席情報のFlexMessageを生成
+
+    Args:
+        room(dict): 学習室のデータ
+        update(str): 更新時間
+
+    Returns:
+        FlexSendMessage
+    """
     room_name = room['name']
     seats_num = room['seats_num']
     web_seats_num = room['web_seats_num']
@@ -85,7 +96,17 @@ def seats_info_message(room, update):
     return FlexSendMessage(alt_text=alt_text, contents=contents)
 
 
-def confirm_new_reservation_message(reserved_room_name, new_reserve_room_name):
+def confirm_new_reservation_message(reserved_room_name: str, new_reserve_room_name: str) -> FlexSendMessage:
+    """
+    新規空席通知予約の確認FlexMessageの生成
+
+    Args:
+        reserved_room_name(str): 既に空席通知予約を行っている学習室名
+        new_reserve_room_name(str): 新規に空席通知予約を行う学習室名
+
+    Returns:
+        FlexSendMessage
+    """
     alt_text = '新規予約'
     contents = {
         'type': 'bubble',
@@ -125,7 +146,17 @@ def confirm_new_reservation_message(reserved_room_name, new_reserve_room_name):
     return FlexSendMessage(alt_text=alt_text, contents=contents)
 
 
-def done_reservation_message(room_name, notice_time):
+def done_reservation_message(room_name: str, notice_time: str) -> FlexSendMessage:
+    """
+    空席通知予約完了メッセージの生成
+
+    Args:
+        room_name(str): 学習室名
+        notice_time(str): 通知化膿時間
+
+    Returns:
+        FlexSendMessage
+    """
     alt_text = '空席通知予約完了'
     contents = {
         'type': 'bubble',
@@ -166,7 +197,13 @@ def done_reservation_message(room_name, notice_time):
     return FlexSendMessage(alt_text=alt_text, contents=contents)
 
 
-def closing_day_message():
+def closing_day_message() -> FlexSendMessage:
+    """
+    閉館時間のFlexMessage
+
+    Returns:
+        FlexSendMessage
+    """
     alt_text = '現在は閉館しています。'
     contents = {
         'type': 'bubble',
@@ -254,7 +291,13 @@ def closing_day_message():
     return FlexSendMessage(alt_text=alt_text, contents=contents)
 
 
-def failed_to_get_data_message():
+def failed_to_get_data_message() -> FlexSendMessage:
+    """
+    データ取得に失敗した際に送信するメッセージの生成
+
+    Returns:
+        FlexSendMessage
+    """
     alt_text = 'データの取得に失敗しました。'
     contents = {
         'type': 'bubble',
@@ -287,56 +330,13 @@ def failed_to_get_data_message():
     return FlexSendMessage(alt_text=alt_text, contents=contents)
 
 
-def typing_failed_message():
-    alt_text = '入力された値が間違っています。'
-    contents = {
-        'type': 'bubble',
-        'body': {
-            'type': 'box',
-            'layout': 'vertical',
-            'contents': [
-                {
-                    'type': 'text',
-                    'text': '正しく入力してください',
-                    'size': 'xl',
-                    'align': 'center',
-                },
-                {
-                    'type': 'separator',
-                    'margin': 'lg'
-                },
-                {
-                    'type': 'text',
-                    'text': 'リッチメニューに存在する学習室名を入力してください。当チャットボットについて詳しい情報は下記のリンクにある当プログラムのGitHubリポジトリをご覧ください。',
-                    'size': 'lg',
-                    'align': 'start',
-                    'margin': 'md',
-                    'wrap': True,
-                }
-            ]
-        },
-        'footer': {
-            'type': 'box',
-            'layout': 'vertical',
-            'flex': 0,
-            'spacing': 'sm',
-            'contents': [
-                {
-                    'type': 'button',
-                    'action': {
-                        'type': 'uri',
-                        'label': 'GitHubリポジトリ',
-                        'uri': 'https://github.com/akishima-ensis/seat-availability-check-linebot'
-                    },
-                    'style': 'link'
-                }
-            ]
-        }
-    }
-    return FlexSendMessage(alt_text=alt_text, contents=contents)
+def usage_message() -> FlexSendMessage:
+    """
+    使い方メッセージの生成
 
-
-def usage_message():
+    Returns:
+        FlexSendMessage
+    """
     alt_text = 'test'
     contents = {
       'type': 'bubble',
@@ -454,4 +454,3 @@ def usage_message():
       }
     }
     return FlexSendMessage(alt_text=alt_text, contents=contents)
-

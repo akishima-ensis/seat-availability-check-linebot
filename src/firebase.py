@@ -1,15 +1,15 @@
-from typing import Dict, Union
+from typing import Dict, Optional
 from datetime import datetime, timedelta
 
 from src import db, jst
 
 
-def get_rooms_data() -> Union[Dict, None]:
+def get_rooms_data() -> Optional[Dict]:
     """
     最新の空席情報の取得
 
     Returns:
-        dict: 空席情報
+        dict or None: 空席情報が存在した場合はdictを返す
     """
     now = datetime.now(jst)
     date = now.strftime('%Y%m%d')
@@ -23,7 +23,7 @@ def get_rooms_data() -> Union[Dict, None]:
         return rooms_data
 
 
-def get_reserved_room(user_id: str) -> Union[str, None]:
+def get_reserved_room(user_id: str) -> Optional[str]:
     """
     予約が存在するかの確認
 
@@ -31,11 +31,11 @@ def get_reserved_room(user_id: str) -> Union[str, None]:
         user_id(str): LINEのユーザーID
 
     Returns:
-        dict:
+        dict or None: 予約が行われていた場合は学習室名を返す
     """
-    user_ref = db.collection('users').document(user_id).get()
-    if user_ref.exists:
-        data = user_ref.to_dict()
+    users_ref = db.collection('users').document(user_id).get()
+    if users_ref.exists:
+        data = users_ref.to_dict()
         if data['reserved']:
             return data['room_name']
 

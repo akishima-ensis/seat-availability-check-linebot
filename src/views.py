@@ -1,4 +1,3 @@
-import re
 from random import randint
 from flask import request, abort
 from linebot.models import (
@@ -8,12 +7,8 @@ from linebot.models import (
 )
 from linebot.exceptions import InvalidSignatureError
 
-from src import app, handler, line, room_names, sticker_messages
-from src.message import (
-    crete_seats_info_message, create_reserve_notice_message,
-    create_new_reserve_notice_message, create_usage_message
-)
-
+from src import app, handler, line, sticker_messages
+from src.message import create_message
 
 
 @app.route('/callback', methods=['POST'])
@@ -34,29 +29,8 @@ def handle_message(event):
     user_id = event.source.user_id
     user_name = line.get_profile(user_id).display_name
     print(f"Received message: \"{message}\" from {user_name}")
-
-    # 空席情報
-    if message in room_names:
-        reply_message = crete_seats_info_message(message)
-
-    # 空席通知予約
-    elif message in [room + ' 予約' for room in room_names]:
-        room_name = re.findall('(.+) 予約', message)[0]
-        reply_message = create_reserve_notice_message(room_name, user_id)
-
-    # 空席通知新規予約（既に予約済みだった場合新規の予約で上書きする）
-    elif message in [room + ' 新規予約' for room in room_names]:
-        room_name = re.findall('(.+) 新規予約', message)[0]
-        reply_message = create_new_reserve_notice_message(room_name, user_id)
-
-    elif message == '使い方':
-        reply_message = create_usage_message()
-
-    # 予期しないメッセージへの対応
-    else:
-        reply_message = create_usage_message()
-
-    line.reply_message(event.reply_token, reply_message)
+    reply_content = create_message(user_id, message)
+    line.reply_message(event.reply_token, reply_content)
 
 
 @handler.add(MessageEvent, message=[ImageMessage, VideoMessage, AudioMessage, LocationMessage, StickerMessage, FileMessage])
@@ -65,7 +39,6 @@ def handle_other_message(event):
     user_id = event.source.user_id
     user_name = line.get_profile(user_id).display_name
     print(f"Received message type: \"{message_type}\" from {user_name}")
-
     text = '送信されたメッセージタイプに対応していません。下記のリッチメニューから学習室名をタッチするか、学習室名を直接入力してください。'
     n = randint(0, len(sticker_messages)-1)
     line.reply_message(

@@ -2,34 +2,18 @@ import re
 from random import randint
 from flask import request, abort
 from linebot.models import (
-    MessageEvent, TextSendMessage, StickerSendMessage,
-    TextMessage, ImageMessage, VideoMessage, AudioMessage,
+    MessageEvent, TextSendMessage, TextMessage,
+    ImageMessage, VideoMessage, AudioMessage,
     LocationMessage, StickerMessage, FileMessage
 )
 from linebot.exceptions import InvalidSignatureError
-from src import app, handler, line
+
+from src import app, handler, line, room_names, sticker_messages
 from src.message import (
     crete_seats_info_message, create_reserve_notice_message,
     create_new_reserve_notice_message, create_usage_message
 )
 
-
-rooms = [
-    '学習席（有線LAN有）',
-    '学習席',
-    '研究個室',
-    'インターネット・DB席',
-    'グループ学習室',
-    'ティーンズ学習室'
-]
-
-sticker_messages = [
-    StickerSendMessage(package_id=11537, sticker_id=52002753),
-    StickerSendMessage(package_id=11537, sticker_id=52002739),
-    StickerSendMessage(package_id=11537, sticker_id=52002757),
-    StickerSendMessage(package_id=11539, sticker_id=52114110),
-    StickerSendMessage(package_id=11539, sticker_id=52114121),
-]
 
 
 @app.route('/callback', methods=['POST'])
@@ -52,16 +36,16 @@ def handle_message(event):
     print(f"Received message: \"{message}\" from {user_name}")
 
     # 空席情報
-    if message in rooms:
+    if message in room_names:
         reply_message = crete_seats_info_message(message)
 
     # 空席通知予約
-    elif message in [room + ' 予約' for room in rooms]:
+    elif message in [room + ' 予約' for room in room_names]:
         room_name = re.findall('(.+) 予約', message)[0]
         reply_message = create_reserve_notice_message(room_name, user_id)
 
     # 空席通知新規予約（既に予約済みだった場合新規の予約で上書きする）
-    elif message in [room + ' 新規予約' for room in rooms]:
+    elif message in [room + ' 新規予約' for room in room_names]:
         room_name = re.findall('(.+) 新規予約', message)[0]
         reply_message = create_new_reserve_notice_message(room_name, user_id)
 

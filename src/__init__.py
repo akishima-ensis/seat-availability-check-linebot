@@ -28,5 +28,27 @@ else:
 db = firestore.client()
 
 
+# viewsで使いまわすやつ
+room_names = [
+    '学習席（有線LAN有）',
+    '学習席',
+    '研究個室',
+    'インターネット・DB席',
+    'グループ学習室',
+    'ティーンズ学習室'
+]
+
+
+# メッセージ以外を受信した時に返すスタンプ群
+from linebot.models import StickerSendMessage
+sticker_messages = [
+    StickerSendMessage(package_id=11537, sticker_id=52002753),
+    StickerSendMessage(package_id=11537, sticker_id=52002739),
+    StickerSendMessage(package_id=11537, sticker_id=52002757),
+    StickerSendMessage(package_id=11539, sticker_id=52114110),
+    StickerSendMessage(package_id=11539, sticker_id=52114121),
+]
+
+
 # Including other scripts
 import src.views

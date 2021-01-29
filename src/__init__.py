@@ -18,9 +18,10 @@ handler = WebhookHandler(LINE_CHANNEL_SECRET)
 
 # setup for firebase
 import firebase_admin
-from firebase_admin import credentials, firestore
+from firebase_admin import firestore
 
 if DEBUG:
+    from firebase_admin import credentials
     SERVICE_ACCOUNT_KEY = config.SERVICE_ACCOUNT_KEY
     cred = credentials.Certificate(SERVICE_ACCOUNT_KEY)
     firebase_admin.initialize_app(cred)

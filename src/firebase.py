@@ -1,17 +1,7 @@
 from typing import Dict, Union
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timedelta
 
-from src import db
-
-
-def get_time() -> datetime:
-    """
-    現在時刻の取得（JST）
-    Returns:
-        datetime
-    """
-    jst = timezone(timedelta(hours=+9), 'JST')
-    return datetime.now(jst)
+from src import db, jst
 
 
 def get_rooms_data() -> Dict:
@@ -21,7 +11,7 @@ def get_rooms_data() -> Dict:
     Returns:
         dict: 空席情報
     """
-    now = get_time()
+    now = datetime.now(jst)
     date = now.strftime('%Y%m%d')
     time = now.strftime('%H%M')
     rooms_ref = db.collection('rooms').document(date).get()
@@ -62,7 +52,7 @@ def reserve_notice(user_id: str, room_name: str) -> datetime:
     Returns:
         datetime: 予約時間
     """
-    now = get_time()
+    now = datetime.now(jst)
     users_ref = db.collection('users').document(user_id)
     data = {
         'reserve_time': now,

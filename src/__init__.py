@@ -50,6 +50,10 @@ sticker_messages = [
     StickerSendMessage(package_id=11539, sticker_id=52114121),
 ]
 
+# 日本標準時
+from datetime import timezone, timedelta
+jst = timezone(timedelta(hours=+9), 'JST')
+
 
 # Including other scripts
 import src.views

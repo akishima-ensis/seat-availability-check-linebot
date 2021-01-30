@@ -52,6 +52,6 @@ def reserve_notice(user_id: str, room_name: str) -> datetime:
     """
     now = datetime.now(jst)
     reservations_ref = db.collection('reservations').document(user_id)
-    data = {'reserve_time': now, 'room_name': room_name}
+    data = {'reservation_time': now, 'room_name': room_name}
     reservations_ref.set(data)
     return now

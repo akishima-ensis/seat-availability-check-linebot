@@ -33,9 +33,9 @@ def get_reserved_room(user_id: str) -> Optional[str]:
     Returns:
         dict or None: 予約が行われていた場合は学習室名を返す
     """
-    users_ref = db.collection('users').document(user_id).get()
-    if users_ref.exists:
-        data = users_ref.to_dict()
+    reservations_ref = db.collection('reservations').document(user_id).get()
+    if reservations_ref.exists:
+        data = reservations_ref.to_dict()
         return data['room_name']
 
 
@@ -51,7 +51,7 @@ def reserve_notice(user_id: str, room_name: str) -> datetime:
         datetime: 予約時間
     """
     now = datetime.now(jst)
-    users_ref = db.collection('users').document(user_id)
+    reservations_ref = db.collection('reservations').document(user_id)
     data = {'reserve_time': now, 'room_name': room_name}
-    users_ref.set(data)
+    reservations_ref.set(data)
     return now

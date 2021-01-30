@@ -36,8 +36,7 @@ def get_reserved_room(user_id: str) -> Optional[str]:
     users_ref = db.collection('users').document(user_id).get()
     if users_ref.exists:
         data = users_ref.to_dict()
-        if data['reserved']:
-            return data['room_name']
+        return data['room_name']
 
 
 def reserve_notice(user_id: str, room_name: str) -> datetime:
@@ -53,11 +52,7 @@ def reserve_notice(user_id: str, room_name: str) -> datetime:
     """
     now = datetime.now(jst)
     users_ref = db.collection('users').document(user_id)
-    data = {
-        'reserve_time': now,
-        'reserved': True,
-        'room_name': room_name
-    }
+    data = {'reserve_time': now, 'room_name': room_name}
     if users_ref.get().exists:
         users_ref.update(data)
     else:

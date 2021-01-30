@@ -53,8 +53,5 @@ def reserve_notice(user_id: str, room_name: str) -> datetime:
     now = datetime.now(jst)
     users_ref = db.collection('users').document(user_id)
     data = {'reserve_time': now, 'room_name': room_name}
-    if users_ref.get().exists:
-        users_ref.update(data)
-    else:
-        users_ref.set(data)
+    users_ref.set(data)
     return now

@@ -1,10 +1,10 @@
-from typing import Dict, Optional
+from typing import Any
 from datetime import datetime, timedelta
 
 from src import db, jst
 
 
-def get_rooms_data() -> Optional[Dict]:
+def get_rooms_data() -> Any:
     """
     最新の空席情報の取得
 
@@ -18,13 +18,16 @@ def get_rooms_data() -> Optional[Dict]:
     rooms_ref = db.collection('rooms').document(date).get()
     if rooms_ref.exists:
         rooms_data = rooms_ref.to_dict().get(time)
+        ## 現在のデータが存在しなかったら1分前のデータを取得
         if not rooms_data:
             before = (now - timedelta(minutes=1)).strftime('%H%M')
             rooms_data = rooms_ref.to_dict().get(before)
         return rooms_data
+    else:
+        return None
 
 
-def get_reserved_room_num(user_id: str) -> Optional[int]:
+def get_reserved_room_num(user_id: str) -> Any:
     """
     予約が存在するかの確認
 
@@ -38,6 +41,8 @@ def get_reserved_room_num(user_id: str) -> Optional[int]:
     if reservations_ref.exists:
         data = reservations_ref.to_dict()
         return data['room_num']
+    else:
+        return None
 
 
 def reserve_notice(user_id: str, room_num: int) -> datetime:

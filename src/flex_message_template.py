@@ -148,7 +148,7 @@ def confirm_new_reservation_message(reserved_room_name: str, new_reserve_room_na
     return FlexSendMessage(alt_text=alt_text, contents=contents)
 
 
-def done_reservation_message(room_name: str, reserved_time: datetime) -> FlexSendMessage:
+def done_reservation_message(room_name: str, reserved_time: datetime.datetime) -> FlexSendMessage:
     """
     空席通知予約完了メッセージの生成
 

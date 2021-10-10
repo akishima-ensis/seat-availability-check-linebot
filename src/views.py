@@ -1,9 +1,16 @@
 from random import randint
+
 from flask import request, abort
 from linebot.models import (
-    MessageEvent, TextSendMessage, TextMessage,
-    ImageMessage, VideoMessage, AudioMessage,
-    LocationMessage, StickerMessage, FileMessage
+    MessageEvent,
+    TextSendMessage,
+    TextMessage,
+    ImageMessage,
+    VideoMessage,
+    AudioMessage,
+    LocationMessage,
+    StickerMessage,
+    FileMessage
 )
 from linebot.exceptions import InvalidSignatureError
 

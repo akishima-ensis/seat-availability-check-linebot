@@ -13,6 +13,7 @@ Flask = ">=1.1.2"
 [dev-packages]
 autopep8 = "*"
 flake8 = "*"
+mypy = "*"
 
 [requires]
 python_version = "3.9"

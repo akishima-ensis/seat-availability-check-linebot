@@ -39,6 +39,9 @@ output > 既に空席通知予約が行われていた場合その予約をキ�
 # 当該リポジトリのクローン
 git clone https://github.com/akishima-ensis/seat-availability-check-linebot
 
+# ディレクトリに移動
+cd seat-availability-check-linebot
+
 # pipenv のインストール
 pip install pipenv
 
@@ -46,7 +49,7 @@ pip install pipenv
 export PIPENV_VENV_IN_PROJECT=1
 
 # 仮想環境の作成
-pipenv instal
+pipenv instal --dev
 
 # 仮想環境に入る
 pipenv shell

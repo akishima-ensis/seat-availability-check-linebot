@@ -1,15 +1,21 @@
-# setup for flask
 import config
-from flask import Flask
 
+from datetime import timezone, timedelta
+
+from flask import Flask
+from linebot import LineBotApi, WebhookHandler
+from linebot.models import StickerSendMessage
+import firebase_admin
+from firebase_admin import firestore
+
+
+# setup for flask
 app = Flask(__name__)
 DEBUG = config.DEBUG
 app.debug = DEBUG
 
 
 # setup line-bot-sdk
-from linebot import LineBotApi, WebhookHandler
-
 LINE_CHANNEL_ACCESS_TOKEN = config.LINE_CHANNEL_ACCESS_TOKEN
 LINE_CHANNEL_SECRET = config.LINE_CHANNEL_SECRET
 line = LineBotApi(LINE_CHANNEL_ACCESS_TOKEN)
@@ -17,9 +23,6 @@ handler = WebhookHandler(LINE_CHANNEL_SECRET)
 
 
 # setup for firebase
-import firebase_admin
-from firebase_admin import firestore
-
 if DEBUG:
     from firebase_admin import credentials
     SERVICE_ACCOUNT_KEY = config.SERVICE_ACCOUNT_KEY
@@ -42,7 +45,6 @@ room_names = [
 
 
 # メッセージ以外を受信した時に返すスタンプ群
-from linebot.models import StickerSendMessage
 sticker_messages = [
     StickerSendMessage(package_id=11537, sticker_id=52002753),
     StickerSendMessage(package_id=11537, sticker_id=52002739),
@@ -52,9 +54,6 @@ sticker_messages = [
 ]
 
 # 日本標準時
-from datetime import timezone, timedelta
 jst = timezone(timedelta(hours=+9), 'JST')
 
-
-# Including other scripts
-import src.views
+import src.views # noqa: F401, E402, E261

@@ -43,16 +43,6 @@ room_names = [
     'ティーンズ学習室'
 ]
 
-
-# メッセージ以外を受信した時に返すスタンプ群
-sticker_messages = [
-    StickerSendMessage(package_id=11537, sticker_id=52002753),
-    StickerSendMessage(package_id=11537, sticker_id=52002739),
-    StickerSendMessage(package_id=11537, sticker_id=52002757),
-    StickerSendMessage(package_id=11539, sticker_id=52114110),
-    StickerSendMessage(package_id=11539, sticker_id=52114121),
-]
-
 # 日本標準時
 jst = timezone(timedelta(hours=+9), 'JST')
 

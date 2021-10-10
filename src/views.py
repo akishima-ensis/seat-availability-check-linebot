@@ -7,8 +7,9 @@ from linebot.models import (
 )
 from linebot.exceptions import InvalidSignatureError
 
-from src import app, handler, line, sticker_messages
+from src import app, handler, line
 from src.message import create_message
+from src.const import STICKER_MESSAGES
 
 
 @app.route('/callback', methods=['POST'])
@@ -42,11 +43,11 @@ def handle_other_message(event):
     user_name = line.get_profile(user_id).display_name
     print(f"Received message type: \"{message_type}\" from {user_name}")
     text = '送信されたメッセージタイプに対応していません。下記のリッチメニューから学習室名をタッチするか、学習室名を直接入力してください。'
-    n = randint(0, len(sticker_messages)-1)
+    n = randint(0, len(STICKER_MESSAGES)-1)
     line.reply_message(
         event.reply_token,
         messages=[
             TextSendMessage(text=text),
-            sticker_messages[n]
+            STICKER_MESSAGES[n]
         ]
     )

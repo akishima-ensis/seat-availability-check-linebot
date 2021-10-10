@@ -31,3 +31,26 @@ output > 既に空席通知予約が行われていた場合その予約をキ�
 ![](https://user-images.githubusercontent.com/34241526/102971513-e064f880-453c-11eb-9fef-a13d96e7459f.png)
 
 [diagrams.net](https://app.diagrams.net/)
+
+
+## Mobilize
+
+```bash
+# 当該リポジトリのクローン
+git clone https://github.com/akishima-ensis/seat-availability-check-linebot
+
+# pipenv のインストール
+pip install pipenv
+
+# プロジェクトルートに仮想環境を作成させる
+export PIPENV_VENV_IN_PROJECT=1
+
+# 仮想環境の作成
+pipenv instal
+
+# 仮想環境に入る
+pipenv shell
+
+# サーバーの起動
+python3 app.py
+```

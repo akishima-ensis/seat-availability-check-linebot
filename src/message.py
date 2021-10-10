@@ -94,14 +94,18 @@ def create_reserve_notice_message(user_id: str, room_num: int, new: bool = False
             room_data = rooms_data['data'][room_num]
             room_name = room_data['name']
             if room_data['seats_num'] == 0:
+                # 新規予約（現在の予約を上書きして予約）
                 if new:
                     reserved_time = reserve_notice(user_id, room_num)
                     return done_reservation_message(room_name, reserved_time)
+                # 予約
                 else:
                     reserved_room_num = get_reserved_room_num(user_id)
+                    # 予約されていなかったら
                     if not reserved_room_num:
                         reserved_time = reserve_notice(user_id, room_num)
                         return done_reservation_message(room_name, reserved_time)
+                    # 既に予約されていたら新規予約のメッセージテンプレートを返す
                     else:
                         reserved_room_name = [k for k, v in ROOM_NAME_MESSAGES.items() if v == reserved_room_num][0]
                         return confirm_new_reservation_message(reserved_room_name, room_data['name'])
@@ -111,3 +115,4 @@ def create_reserve_notice_message(user_id: str, room_num: int, new: bool = False
             return failed_to_get_data_message()
     else:
         return closing_day_message()
+

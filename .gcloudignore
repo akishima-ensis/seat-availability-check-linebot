@@ -4,5 +4,5 @@
 # upload list
 !requirements.txt
 !config.py
-!server.py
+!app.py
 !src/

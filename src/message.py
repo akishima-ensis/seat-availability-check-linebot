@@ -8,6 +8,14 @@ from src.flex_message_template import (
     seats_info_message,  done_reservation_message, confirm_new_reservation_message,
     closing_day_message, failed_to_get_data_message, usage_message
 )
+from src.const import (
+    ROOM_NAME_MESSAGES,
+    ROOM_NAME_MESSAGES_LIST,
+    ROOM_RESERVATION_MESSAGES,
+    ROOM_RESERVATION_MESSAGES_LIST,
+    ROOM_NEW_RESERVATION_MESSAGES_LIST,
+    ROOM_NEW_RESERVATION_MESSAGES,
+)
 
 
 def create_message(user_id: str, message: str) -> Union[FlexSendMessage, TextSendMessage]:
@@ -22,8 +30,8 @@ def create_message(user_id: str, message: str) -> Union[FlexSendMessage, TextSen
     """
 
     # 空席情報
-    if message in room_names:
-        reply_content = create_seats_info(message)
+    if message in ROOM_NAME_MESSAGES_LIST:
+        reply_content = create_seats_info(ROOM_NAME_MESSAGES[message])
 
     # 空席通知予約
     elif message in [room + ' 予約' for room in room_names]:
@@ -42,12 +50,12 @@ def create_message(user_id: str, message: str) -> Union[FlexSendMessage, TextSen
     return reply_content
 
 
-def create_seats_info(target_room_name: str) -> FlexSendMessage:
+def create_seats_info(room_num: int) -> FlexSendMessage:
     """
-    target_room_nameに基づく現在の学習室の空席情報メッセージの生成
+    現在の学習室の空席情報メッセージの生成
 
     Args:
-        target_room_name(str): 学習室名
+        room_num: 学習室番号（const.pyを参照）
 
     Returns:
         FlexSendMessage
@@ -55,9 +63,8 @@ def create_seats_info(target_room_name: str) -> FlexSendMessage:
     rooms_data = get_rooms_data()
     if rooms_data:
         if rooms_data['status']:
-            for room_data in rooms_data['data']:
-                if target_room_name == room_data['name']:
-                    return seats_info_message(room_data, rooms_data['update'])
+            room_data = rooms_data['data'][room_num]
+            return seats_info_message(room_data, rooms_data['update'])
         return failed_to_get_data_message()
     return closing_day_message()
 

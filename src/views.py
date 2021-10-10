@@ -33,7 +33,9 @@ def handle_message(event):
     line.reply_message(event.reply_token, reply_content)
 
 
-@handler.add(MessageEvent, message=[ImageMessage, VideoMessage, AudioMessage, LocationMessage, StickerMessage, FileMessage])
+@handler.add(MessageEvent, message=[
+    ImageMessage, VideoMessage, AudioMessage,
+    LocationMessage, StickerMessage, FileMessage])
 def handle_other_message(event):
     message_type = event.message.type
     user_id = event.source.user_id

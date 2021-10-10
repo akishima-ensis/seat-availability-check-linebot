@@ -1,6 +1,6 @@
-runtime: python38
+runtime: python39
 env: standard
-entrypoint: gunicorn -b :$PORT server:app
+entrypoint: gunicorn -b :$PORT app:app
 
 automatic_scaling:
   min_idle_instances: automatic

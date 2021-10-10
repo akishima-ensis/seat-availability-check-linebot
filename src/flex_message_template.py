@@ -4,7 +4,7 @@ import datetime
 from linebot.models import FlexSendMessage
 
 
-def seats_info_message(room: Dict, update: str) -> FlexSendMessage:
+def room_info_message(room: Dict, update: str) -> FlexSendMessage:
     """
     空席情報のFlexMessageを生成
 

@@ -11,7 +11,7 @@ from src.firebase import (
     reserve_notice
 )
 from src.flex_message_template import (
-    seats_info_message,
+    room_info_message,
     done_reservation_message,
     confirm_new_reservation_message,
     closing_day_message,
@@ -38,7 +38,7 @@ def create_message(user_id: str, message: str) -> Union[FlexSendMessage, TextSen
 
     # 空席情報
     if message in ROOM_NAME_MESSAGES.keys():
-        reply_content = create_seats_info(ROOM_NAME_MESSAGES[message])
+        reply_content = create_room_info_message(ROOM_NAME_MESSAGES[message])
 
     # 空席通知予約
     elif message in ROOM_RESERVATION_MESSAGES.keys():
@@ -57,7 +57,7 @@ def create_message(user_id: str, message: str) -> Union[FlexSendMessage, TextSen
     return reply_content
 
 
-def create_seats_info(room_num: int) -> FlexSendMessage:
+def create_room_info_message(room_num: int) -> FlexSendMessage:
     """
     現在の学習室の空席情報メッセージの生成
 
@@ -71,7 +71,7 @@ def create_seats_info(room_num: int) -> FlexSendMessage:
     if rooms_data:
         if rooms_data['status']:
             room_data = rooms_data['data'][room_num]
-            return seats_info_message(room_data, rooms_data['update'])
+            return room_info_message(room_data, rooms_data['update'])
         return failed_to_get_data_message()
     return closing_day_message()
 

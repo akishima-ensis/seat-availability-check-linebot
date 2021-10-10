@@ -10,8 +10,6 @@ ROOM_NAME_MESSAGES = {
   'ティーンズ学習室': 5,
 }
 
-ROOM_NAME_MESSAGES_LIST = ROOM_NAME_MESSAGES.keys()
-
 ROOM_RESERVATION_MESSAGES = {
   '学習席（有線LAN有） 予約': 0,
   '学習席 予約': 1,
@@ -21,8 +19,6 @@ ROOM_RESERVATION_MESSAGES = {
   'ティーンズ学習室 予約': 5,
 }
 
-ROOM_RESERVATION_MESSAGES_LIST = ROOM_RESERVATION_MESSAGES.keys()
-
 ROOM_NEW_RESERVATION_MESSAGES = {
   '学習席（有線LAN有） 新規予約': 0,
   '学習席 新規予約': 1,
@@ -31,8 +27,6 @@ ROOM_NEW_RESERVATION_MESSAGES = {
   'グループ学習室 新規予約': 4,
   'ティーンズ学習室 新規予約': 5,
 }
-
-ROOM_NEW_RESERVATION_MESSAGES_LIST = ROOM_NEW_RESERVATION_MESSAGES.keys()
 
 STICKER_MESSAGES = [
   StickerSendMessage(package_id=11537, sticker_id=52002753),

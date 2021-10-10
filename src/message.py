@@ -8,11 +8,8 @@ from src.flex_message_template import (
 )
 from src.const import (
     ROOM_NAME_MESSAGES,
-    ROOM_NAME_MESSAGES_LIST,
     ROOM_RESERVATION_MESSAGES,
-    ROOM_RESERVATION_MESSAGES_LIST,
     ROOM_NEW_RESERVATION_MESSAGES,
-    ROOM_NEW_RESERVATION_MESSAGES_LIST,
 )
 
 
@@ -28,16 +25,16 @@ def create_message(user_id: str, message: str) -> Union[FlexSendMessage, TextSen
     """
 
     # 空席情報
-    if message in ROOM_NAME_MESSAGES_LIST:
+    if message in ROOM_NAME_MESSAGES.keys():
         reply_content = create_seats_info(ROOM_NAME_MESSAGES[message])
 
     # 空席通知予約
-    elif message in ROOM_RESERVATION_MESSAGES_LIST:
+    elif message in ROOM_RESERVATION_MESSAGES.keys():
         room_num = ROOM_RESERVATION_MESSAGES[message]
         reply_content = create_reserve_notice_message(user_id, room_num)
 
     # 空席通知新規予約（既に予約済みだった場合新規の予約で上書きする）
-    elif message in ROOM_NEW_RESERVATION_MESSAGES_LIST:
+    elif message in ROOM_NEW_RESERVATION_MESSAGES.keys():
         room_num = ROOM_NEW_RESERVATION_MESSAGES[message]
         reply_content = create_reserve_notice_message(user_id, room_num, new=True)
 

@@ -4,7 +4,6 @@ from datetime import timezone, timedelta
 
 from flask import Flask
 from linebot import LineBotApi, WebhookHandler
-from linebot.models import StickerSendMessage
 import firebase_admin
 from firebase_admin import firestore
 
@@ -32,16 +31,6 @@ else:
     firebase_admin.initialize_app()
 db = firestore.client()
 
-
-# viewsで使いまわすやつ
-room_names = [
-    '学習席（有線LAN有）',
-    '学習席',
-    '研究個室',
-    'インターネット・DB席',
-    'グループ学習室',
-    'ティーンズ学習室'
-]
 
 # 日本標準時
 jst = timezone(timedelta(hours=+9), 'JST')

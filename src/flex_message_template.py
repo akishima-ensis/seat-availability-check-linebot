@@ -1,4 +1,6 @@
 from typing import Dict
+
+import datetime
 from linebot.models import FlexSendMessage
 
 
@@ -146,17 +148,18 @@ def confirm_new_reservation_message(reserved_room_name: str, new_reserve_room_na
     return FlexSendMessage(alt_text=alt_text, contents=contents)
 
 
-def done_reservation_message(room_name: str, notice_time: str) -> FlexSendMessage:
+def done_reservation_message(room_name: str, reserved_time: datetime) -> FlexSendMessage:
     """
     空席通知予約完了メッセージの生成
 
     Args:
         room_name(str): 学習室名
-        notice_time(str): 通知化膿時間
+        reserved_time(datetime): 通知予約時間
 
     Returns:
         FlexSendMessage
     """
+    reserved_time_to_text = f'{str(reserved_time.hour).zfill(2)}:{str(reserved_time.minute).zfill(2)}'
     alt_text = '空席通知予約完了'
     contents = {
         'type': 'bubble',
@@ -177,7 +180,7 @@ def done_reservation_message(room_name: str, notice_time: str) -> FlexSendMessag
                 },
                 {
                     'type': 'text',
-                    'text': f'予約完了 {notice_time}',
+                    'text': f'予約完了 {reserved_time_to_text}',
                     'weight': 'bold',
                     'size': 'lg',
                     'align': 'center',

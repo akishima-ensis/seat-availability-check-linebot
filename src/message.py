@@ -84,14 +84,12 @@ def create_reserve_notice_message(user_id: str, room_num: int, new: bool = False
             if room_data['seats_num'] == 0:
                 if new:
                     reserved_time = reserve_notice(user_id, room_num)
-                    notice_time = f'{str(reserved_time.hour).zfill(2)}:{str(reserved_time.minute).zfill(2)}'
-                    return done_reservation_message(room_name, notice_time)
+                    return done_reservation_message(room_name, reserved_time)
                 else:
                     reserved_room_num = get_reserved_room_num(user_id)
                     if not reserved_room_num:
                         reserved_time = reserve_notice(user_id, room_num)
-                        notice_time = f'{str(reserved_time.hour).zfill(2)}:{str(reserved_time.minute).zfill(2)}'
-                        return done_reservation_message(room_name, notice_time)
+                        return done_reservation_message(room_name, reserved_time)
                     else:
                         reserved_room_name = [k for k, v in ROOM_NAME_MESSAGES.items() if v == reserved_room_num][0]
                         return confirm_new_reservation_message(reserved_room_name, room_data['name'])

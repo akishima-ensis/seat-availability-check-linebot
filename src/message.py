@@ -115,4 +115,3 @@ def create_reserve_notice_message(user_id: str, room_num: int, new: bool = False
             return failed_to_get_data_message()
     else:
         return closing_day_message()
-
